@@ -1,1 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 @import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+    background-color: #f8fafc;
+    color: #0f172a;
+}
+
+@theme {
+    --color-primary: #f59e0b;
+    --color-primary-focus: #d97706;
+    --font-logo: "Libre Baskerville", serif;
+    --breakpoint-xs: 400px;
+}

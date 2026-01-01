@@ -1,12 +1,37 @@
 <script setup>
-
-
+import AppLayout from './components/layout/AppLayout.vue'
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col items-center justify-center bg-slate-900 text-white">
-    <h1 class="text-6xl font-bold tracking-tighter animate-bounce">
-      Hola mundo
-    </h1>
-  </div>
+  <AppLayout>
+    <router-view v-slot="{ Component }">
+      <transition name="page" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </AppLayout>
 </template>
+
+<style>
+/* Global transitions */
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* Custom selection */
+::selection {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+</style>
