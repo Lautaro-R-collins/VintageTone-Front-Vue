@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { toast } from 'vue-sonner'
 
 const form = ref({
     name: '',
@@ -9,7 +10,9 @@ const form = ref({
 
 const handleSubmit = () => {
     console.log('Form submitted:', form.value)
-    alert('¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.')
+    toast.success('¡Mensaje enviado!', {
+        description: 'Nos pondremos en contacto contigo lo antes posible.',
+    })
     form.value = { name: '', email: '', message: '' }
 }
 </script>   
