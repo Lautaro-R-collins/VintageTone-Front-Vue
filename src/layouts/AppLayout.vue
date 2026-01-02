@@ -1,7 +1,7 @@
 <script setup>
-import Navbar from './Navbar.vue'
-import Footer from './Footer.vue'
-import AnnouncementBar from '../common/AnnouncementBar.vue'
+import Navbar from '../components/navbar/Navbar.vue'
+import Footer from '../components/footer/Footer.vue'
+import AnnouncementBar from '../components/common/AnnouncementBar.vue'
 </script>
 
 <template>
