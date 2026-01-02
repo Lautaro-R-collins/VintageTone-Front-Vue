@@ -19,10 +19,11 @@ const closeMenu = () => {
 <template>
     <header class="sticky top-0 z-50">
         <!-- Main Navbar: Logo & Actions -->
-        <nav
-            class="bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between backdrop-blur-md bg-opacity-95">
-            <NavbarBrand />
-            <NavbarActions />
+        <nav class="bg-white border-b border-slate-100 backdrop-blur-md bg-opacity-95">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+                <NavbarBrand />
+                <NavbarActions />
+            </div>
         </nav>
 
         <!-- Sub-Navbar: Navigation links & Mobile Toggle -->
