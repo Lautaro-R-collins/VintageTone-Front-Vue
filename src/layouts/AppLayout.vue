@@ -13,6 +13,7 @@ import AnnouncementBar from '../components/common/AnnouncementBar.vue'
       <slot />
     </main>
     
+    <div class="border-t border-slate-200"></div>
     <Footer />
   </div>
 </template>
