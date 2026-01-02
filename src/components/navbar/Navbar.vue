@@ -19,10 +19,11 @@ const closeMenu = () => {
 <template>
     <header class="sticky top-0 z-50">
         <!-- Main Navbar: Logo & Actions -->
-        <nav
-            class="bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between backdrop-blur-md bg-opacity-95">
-            <NavbarBrand />
-            <NavbarActions />
+        <nav class="bg-white border-b border-slate-100 backdrop-blur-md bg-opacity-95">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+                <NavbarBrand />
+                <NavbarActions />
+            </div>
         </nav>
 
         <!-- Sub-Navbar: Navigation links & Mobile Toggle -->
@@ -42,7 +43,7 @@ const closeMenu = () => {
                 </button>
 
                 <!-- Desktop Links & Mobile Dropdown Stack -->
-                <div class="w-full sm:w-auto overflow-hidden transition-all duration-300 ease-in-out"
+                <div class="w-full overflow-hidden transition-all duration-300 ease-in-out"
                     :class="[isMenuOpen ? 'max-h-[500px] opacity-100 border-t border-white/5' : 'max-h-0 sm:max-h-full opacity-0 sm:opacity-100 overflow-hidden sm:overflow-visible']">
                     <NavbarLinks @link-clicked="closeMenu" />
                 </div>
