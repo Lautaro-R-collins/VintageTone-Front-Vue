@@ -42,7 +42,7 @@ const closeMenu = () => {
                 </button>
 
                 <!-- Desktop Links & Mobile Dropdown Stack -->
-                <div class="w-full sm:w-auto overflow-hidden transition-all duration-300 ease-in-out"
+                <div class="w-full overflow-hidden transition-all duration-300 ease-in-out"
                     :class="[isMenuOpen ? 'max-h-[500px] opacity-100 border-t border-white/5' : 'max-h-0 sm:max-h-full opacity-0 sm:opacity-100 overflow-hidden sm:overflow-visible']">
                     <NavbarLinks @link-clicked="closeMenu" />
                 </div>
