@@ -116,18 +116,18 @@ const subcategorySlug = computed(() => route.params.subcategory)
 const currentCategory = computed(() => {
     const catSlug = categorySlug.value?.toLowerCase()
     const subSlug = subcategorySlug.value?.toLowerCase()
-    
+
     const category = categoryInfo[catSlug]
-    
+
     if (!category) {
         return { title: catSlug || 'Categoría', subtitle: '', image: '' }
     }
-    
+
     // If there's a subcategory, use its info
     if (subSlug && category.subcategories && category.subcategories[subSlug]) {
         return category.subcategories[subSlug]
     }
-    
+
     return category
 })
 
@@ -179,11 +179,9 @@ watch([categorySlug, subcategorySlug], () => {
 
 <template>
     <div class="bg-slate-50 min-h-screen pb-20">
-        <CategoryHeader 
-            :title="currentCategory.title"
+        <CategoryHeader :title="currentCategory.title"
             :subtitle="subcategorySlug ? subcategorySlug.replace(/-/g, ' ') : currentCategory.subtitle"
-            :image="currentCategory.image"
-        />
+            :image="currentCategory.image" />
 
         <Breadcrumbs />
 
@@ -193,29 +191,18 @@ watch([categorySlug, subcategorySlug], () => {
                 <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
                     Mostrando {{ paginatedProducts.length }} de {{ filteredProducts.length }} productos
                 </p>
-                
+
                 <div v-if="totalPages > 1" class="join mt-4 md:mt-0">
-                    <button 
-                        @click="goToPage(currentPage - 1)" 
-                        :disabled="currentPage === 1"
-                        class="join-item btn btn-xs bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white disabled:bg-slate-50"
-                    >
+                    <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1"
+                        class="join-item btn btn-xs bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white disabled:bg-slate-50">
                         «
                     </button>
-                    <button 
-                        v-for="page in totalPages" 
-                        :key="page"
-                        @click="goToPage(page)"
-                        class="join-item btn btn-xs"
-                        :class="currentPage === page ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100'"
-                    >
+                    <button v-for="page in totalPages" :key="page" @click="goToPage(page)" class="join-item btn btn-xs"
+                        :class="currentPage === page ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100'">
                         {{ page }}
                     </button>
-                    <button 
-                        @click="goToPage(currentPage + 1)" 
-                        :disabled="currentPage === totalPages"
-                        class="join-item btn btn-xs bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white disabled:bg-slate-50"
-                    >
+                    <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages"
+                        class="join-item btn btn-xs bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white disabled:bg-slate-50">
                         »
                     </button>
                 </div>
@@ -223,18 +210,17 @@ watch([categorySlug, subcategorySlug], () => {
 
             <!-- Products Grid -->
             <div v-if="paginatedProducts.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <CardProduct 
-                    v-for="product in paginatedProducts" 
-                    :key="product.id" 
-                    :product="product"
-                />
+                <CardProduct v-for="product in paginatedProducts" :key="product.id" :product="product" />
             </div>
 
             <!-- Empty State -->
             <div v-else class="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-200">
-                <h3 class="text-xl font-bold text-slate-900 uppercase tracking-widest mb-2 italic font-logo">No se encontraron productos</h3>
-                <p class="text-slate-500 text-xs uppercase tracking-widest">Intenta con otra categoría o vuelve más pronto</p>
-                <router-link to="/" class="btn btn-sm mt-8 bg-slate-900 text-white hover:bg-amber-600 border-none px-8 rounded-full">
+                <h3 class="text-xl font-bold text-slate-900 uppercase tracking-widest mb-2 italic font-logo">No se
+                    encontraron productos</h3>
+                <p class="text-slate-500 text-xs uppercase tracking-widest">Intenta con otra categoría o vuelve más
+                    pronto</p>
+                <router-link to="/"
+                    class="btn btn-sm mt-8 bg-slate-900 text-white hover:bg-amber-600 border-none px-8 rounded-full">
                     Volver al inicio
                 </router-link>
             </div>
@@ -242,27 +228,16 @@ watch([categorySlug, subcategorySlug], () => {
             <!-- Bottom Pagination -->
             <div v-if="totalPages > 1" class="flex justify-center mt-16">
                 <div class="join">
-                    <button 
-                        @click="goToPage(currentPage - 1)" 
-                        :disabled="currentPage === 1"
-                        class="join-item btn btn-sm bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white"
-                    >
+                    <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1"
+                        class="join-item btn btn-sm bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white">
                         Anterior
                     </button>
-                    <button 
-                        v-for="page in totalPages" 
-                        :key="page"
-                        @click="goToPage(page)"
-                        class="join-item btn btn-sm"
-                        :class="currentPage === page ? 'bg-slate-900 border-slate-900 text-white font-bold' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100'"
-                    >
+                    <button v-for="page in totalPages" :key="page" @click="goToPage(page)" class="join-item btn btn-sm"
+                        :class="currentPage === page ? 'bg-slate-900 border-slate-900 text-white font-bold' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100'">
                         {{ page }}
                     </button>
-                    <button 
-                        @click="goToPage(currentPage + 1)" 
-                        :disabled="currentPage === totalPages"
-                        class="join-item btn btn-sm bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white"
-                    >
+                    <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages"
+                        class="join-item btn btn-sm bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white">
                         Siguiente
                     </button>
                 </div>
