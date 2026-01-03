@@ -2,6 +2,7 @@
 import Navbar from '../components/navbar/Navbar.vue'
 import Footer from '../components/footer/Footer.vue'
 import AnnouncementBar from '../components/common/AnnouncementBar.vue'
+import Breadcrumbs from '../components/common/Breadcrumbs.vue'
 import { Toaster } from 'vue-sonner'
 </script>
 
@@ -10,6 +11,7 @@ import { Toaster } from 'vue-sonner'
     <Toaster position="top-right" richColors />
     <AnnouncementBar />
     <Navbar />
+    <Breadcrumbs />
     
     <main class="grow">
       <slot />
