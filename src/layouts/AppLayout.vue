@@ -10,11 +10,11 @@ import { Toaster } from 'vue-sonner'
     <Toaster position="top-right" richColors />
     <AnnouncementBar />
     <Navbar />
-    
+
     <main class="grow">
       <slot />
     </main>
-    
+
     <div class="border-t border-slate-200"></div>
     <Footer />
   </div>
