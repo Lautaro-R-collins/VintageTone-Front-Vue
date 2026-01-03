@@ -1,5 +1,5 @@
 <script setup>
-import { Mail, MapPin, Phone } from 'lucide-vue-next'
+import { Mail, MapPin, Phone, Instagram, Youtube } from 'lucide-vue-next'
 </script>
 
 <template>
@@ -51,16 +51,14 @@ import { Mail, MapPin, Phone } from 'lucide-vue-next'
       </div>
     </div>
     
-    <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center text-[9px] tracking-[0.2em] uppercase font-black text-slate-300">
+    <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center text-[9px] tracking-[0.2em] uppercase font-black text-slate-500">
       <p>&copy; 2026 VintageTone Music Store. Todos los derechos reservados.</p>
-      <div class="flex space-x-8 mt-6 md:mt-0">
-        <a class="hover:text-slate-950 transition-colors cursor-pointer flex items-center gap-2">
-          <Instagram :size="14" />
-          Instagram
+      <div class="flex space-x-6 mt-6 md:mt-0">
+        <a class="hover:text-amber-600 transition-all cursor-pointer hover:scale-110">
+          <Instagram :size="20" />
         </a>
-        <a class="hover:text-slate-950 transition-colors cursor-pointer flex items-center gap-2">
-          <Youtube :size="14" />
-          YouTube
+        <a class="hover:text-amber-600 transition-all cursor-pointer hover:scale-110">
+          <Youtube :size="20" />
         </a>
       </div>
     </div>
