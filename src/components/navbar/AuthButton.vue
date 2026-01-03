@@ -8,7 +8,7 @@ import { User, LogIn, UserPlus } from 'lucide-vue-next'
       <User :size="24" class="text-slate-900" />
     </label>
 
-    <ul tabindex="0" class="dropdown-content z-50 menu p-3 shadow-2xl bg-white rounded-xl w-52 mt-4 border border-slate-100 space-y-1">
+    <ul tabindex="0" class="dropdown-content z-50 menu p-2 shadow-2xl bg-white rounded-xl w-52 mt-4 border border-slate-100 space-y-1">
       <li>
         <router-link to="/login" class="flex items-center gap-3 py-3 px-4 rounded-xl text-slate-900 font-bold text-xs uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all group">
           <LogIn :size="18" class="group-hover:translate-x-1 transition-transform" />
