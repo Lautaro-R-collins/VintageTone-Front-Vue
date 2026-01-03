@@ -21,17 +21,16 @@ const categories = [
             </h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <router-link v-for="category in categories" :key="category.name" :to="category.path" class="group cursor-pointer">
+                <router-link v-for="category in categories" :key="category.name" :to="category.path"
+                    class="group cursor-pointer">
                     <!-- Square Card -->
                     <div class="aspect-square overflow-hidden bg-slate-100 flex items-center justify-center">
-                        <img 
-                            :src="category.image" 
-                            :alt="category.name" 
-                            class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 ease-in-out"
-                        />
+                        <img :src="category.image" :alt="category.name"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 ease-in-out" />
                     </div>
                     <!-- Category Name -->
-                    <div class="mt-4 flex items-center justify-between border-b-2 border-transparent group-hover:border-amber-500 transition-all duration-300 pb-2">
+                    <div
+                        class="mt-4 flex items-center justify-between border-b-2 border-transparent group-hover:border-amber-500 transition-all duration-300 pb-2">
                         <span class="text-xs font-black uppercase tracking-[0.2em] text-slate-900">
                             {{ category.name }}
                         </span>
@@ -42,4 +41,3 @@ const categories = [
         </div>
     </section>
 </template>
-
