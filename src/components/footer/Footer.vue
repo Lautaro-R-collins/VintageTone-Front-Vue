@@ -1,9 +1,9 @@
 <script setup>
-import { Instagram, Youtube, Mail, MapPin, Phone } from 'lucide-vue-next'
+import { Mail, MapPin, Phone, Instagram, Youtube } from 'lucide-vue-next'
 </script>
 
 <template>
-  <footer class="bg-white text-slate-500 py-16 px-6 border-t border-slate-100 mt-20">
+  <footer class="bg-white text-slate-800 py-16 px-6 mt-10">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
       <div class="space-y-6 col-span-1 md:col-span-2">
         <div class="flex items-center">
@@ -13,20 +13,20 @@ import { Instagram, Youtube, Mail, MapPin, Phone } from 'lucide-vue-next'
             </span>
           </router-link>
         </div>
-        <p class="max-w-xs text-xs leading-relaxed text-slate-500 font-medium uppercase tracking-wider">
+        <p class="max-w-xs text-xs leading-relaxed text-slate-800 font-medium uppercase tracking-wider">
           Tu destino definitivo para el equipamiento musical con alma. Seleccionamos instrumentos que cuentan una historia.
         </p>
         <div class="space-y-3 pt-4">
-          <div class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-            <MapPin :size="14" class="text-slate-300" />
+          <div class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-800">
+            <MapPin :size="14" class="text-slate-800" />
             <span>Calle Falsa 123, Buenos Aires</span>
           </div>
-          <div class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-            <Phone :size="14" class="text-slate-300" />
+          <div class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-800">
+            <Phone :size="14" class="text-slate-800" />
             <span>+54 11 1234 5678</span>
           </div>
-          <div class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-            <Mail :size="14" class="text-slate-300" />
+          <div class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-800">
+            <Mail :size="14" class="text-slate-800" />
             <span>hola@vintagetone.com</span>
           </div>
         </div>
@@ -51,16 +51,14 @@ import { Instagram, Youtube, Mail, MapPin, Phone } from 'lucide-vue-next'
       </div>
     </div>
     
-    <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center text-[9px] tracking-[0.2em] uppercase font-black text-slate-300">
+    <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center text-[9px] tracking-[0.2em] uppercase font-black text-slate-500">
       <p>&copy; 2026 VintageTone Music Store. Todos los derechos reservados.</p>
-      <div class="flex space-x-8 mt-6 md:mt-0">
-        <a class="hover:text-slate-950 transition-colors cursor-pointer flex items-center gap-2">
-          <Instagram :size="14" />
-          Instagram
+      <div class="flex space-x-6 mt-6 md:mt-0">
+        <a class="hover:text-amber-600 transition-all cursor-pointer hover:scale-110">
+          <Instagram :size="20" />
         </a>
-        <a class="hover:text-slate-950 transition-colors cursor-pointer flex items-center gap-2">
-          <Youtube :size="14" />
-          YouTube
+        <a class="hover:text-amber-600 transition-all cursor-pointer hover:scale-110">
+          <Youtube :size="20" />
         </a>
       </div>
     </div>
