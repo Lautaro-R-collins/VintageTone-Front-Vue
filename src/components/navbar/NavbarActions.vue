@@ -7,4 +7,3 @@ import AuthButton from './AuthButton.vue'
         <AuthButton />
     </div>
 </template>
-
