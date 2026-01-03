@@ -1,6 +1,7 @@
 <script setup>
 import AboutCard from '../components/about/AboutCard.vue'
 import TeamCard from '../components/about/TeamCard.vue'
+import Breadcrumbs from '../components/common/Breadcrumbs.vue'
 import { teamMembers } from '../mocks/team'
 
 const sections = [
@@ -20,7 +21,9 @@ const sections = [
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-6 py-20 min-h-screen relative">
+  <div class="min-h-screen">
+    <Breadcrumbs />
+    <div class="max-w-7xl mx-auto px-6 py-20 relative">
     <!-- Background Title (Decorative) -->
     <h1
       class="text-7xl md:text-9xl font-black text-slate-200 absolute -top-10 left-0 -z-10 uppercase italic tracking-tighter opacity-30 select-none">
@@ -65,4 +68,5 @@ const sections = [
       </div>
     </section>
   </div>
+</div>
 </template>
