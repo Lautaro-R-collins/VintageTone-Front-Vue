@@ -18,7 +18,7 @@ const goToProduct = () => {
 
 const toggleFavorite = (e) => {
     e.stopPropagation() // Prevent triggering the card click
-    // Favorite logic here
+    // logic here
 }
 </script>
 
