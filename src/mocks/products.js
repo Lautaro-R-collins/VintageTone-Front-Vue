@@ -60,5 +60,21 @@ export const mockProducts = [
         price: '6,500',
         image: headerImg,
         badge: 'Rare'
+    },
+    {
+        id: 8,
+        name: 'Classical Guitar 1970',
+        category: 'Instrumentos',
+        price: '1,800',
+        image: guitarFender,
+        badge: 'Classic'
+    },
+    {
+        id: 9,
+        name: 'Vintage Cello Box',
+        category: 'Instrumentos',
+        price: '2,100',
+        image: guitarGibson,
+        badge: 'Acoustic'
     }
 ]
