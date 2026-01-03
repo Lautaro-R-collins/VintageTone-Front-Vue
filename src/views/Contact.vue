@@ -1,5 +1,6 @@
 <script setup>
 import FormContact from '../components/contact/FormContact.vue'
+import Breadcrumbs from '../components/common/Breadcrumbs.vue'
 import { Mail, MapPin, Phone, Instagram, Facebook, Twitter } from 'lucide-vue-next'
 
 const contactInfo = [
@@ -16,7 +17,9 @@ const socials = [
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-6 py-20 min-h-screen relative overflow-hidden">
+  <div class="min-h-screen">
+    <Breadcrumbs />
+    <div class="max-w-7xl mx-auto px-6 py-20 relative overflow-hidden">
     <!-- Background Title (Decorative) -->
     <h1 class="text-7xl md:text-9xl font-black text-slate-100 absolute top-0 -right-20 -z-10 uppercase italic tracking-tighter opacity-50 select-none rotate-90 origin-top-right">
       Contacto
@@ -69,4 +72,5 @@ const socials = [
       </div>
     </div>
   </div>
+</div>
 </template>
