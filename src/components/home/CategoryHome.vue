@@ -6,10 +6,10 @@ import catAccessories from '../../assets/home/cat_accessories.png'
 import { ArrowRight } from 'lucide-vue-next'
 
 const categories = [
-    { name: 'Instrumentos', image: catGuitars },
-    { name: 'Amplificadores', image: catAmps },
-    { name: 'Pedales', image: catPedals },
-    { name: 'Accesorios', image: catAccessories }
+    { name: 'Instrumentos', image: catGuitars, path: '/category/instrumentos' },
+    { name: 'Amplificadores', image: catAmps, path: '/category/amplificadores' },
+    { name: 'Efectos', image: catPedals, path: '/category/efectos' },
+    { name: 'Accesorios', image: catAccessories, path: '/category/accesorios' }
 ]
 </script>
 
@@ -21,7 +21,7 @@ const categories = [
             </h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div v-for="category in categories" :key="category.name" class="group cursor-pointer">
+                <router-link v-for="category in categories" :key="category.name" :to="category.path" class="group cursor-pointer">
                     <!-- Square Card -->
                     <div class="aspect-square overflow-hidden bg-slate-100 flex items-center justify-center">
                         <img 
@@ -37,7 +37,7 @@ const categories = [
                         </span>
                         <ArrowRight :size="16" class="transition-transform group-hover:translate-x-1" />
                     </div>
-                </div>
+                </router-link>
             </div>
         </div>
     </section>
