@@ -24,49 +24,46 @@ const sections = [
   <div class="min-h-screen">
     <Breadcrumbs />
     <div class="max-w-7xl mx-auto px-6 py-20 relative">
-    <!-- Background Title (Decorative) -->
-    <h1
-      class="text-7xl md:text-9xl font-black text-slate-200 absolute -top-10 left-0 -z-10 uppercase italic tracking-tighter opacity-30 select-none">
-      VintageTone
-    </h1>
-
-    <!-- Page Intro -->
-    <header class="max-w-3xl mb-16 space-y-6">
-      <h1 class="text-4xl md:text-6xl font-black text-slate-900 uppercase italic tracking-tighter leading-none">
-        Sobre nosotros
+      <!-- Background Title (Decorative) -->
+      <h1
+        class="text-7xl md:text-9xl font-black text-slate-200 absolute -top-10 left-0 -z-10 uppercase italic tracking-tighter opacity-30 select-none">
+        VintageTone
       </h1>
-      <p class="text-slate-600 text-lg md:text-xl font-medium leading-relaxed">
-        Desde 1994, VintageTone ha sido el refugio para músicos que no solo buscan una herramienta, sino un compañero de
-        viaje. Nuestra tienda nació en el corazón de un taller de luthier, rescatando la magia de las maderas añejas y
-        los circuitos analógicos que definieron el rock, el funk y el blues.
-      </p>
-    </header>
 
-    <!-- Detailed Sections -->
-    <div class="space-y-10">
-      <AboutCard v-for="(section, index) in sections" :key="index" v-bind="section" />
-    </div>
+      <!-- Page Intro -->
+      <header class="max-w-3xl mb-16 space-y-6">
+        <h1 class="text-4xl md:text-6xl font-black text-slate-900 uppercase italic tracking-tighter leading-none">
+          Sobre nosotros
+        </h1>
+        <p class="text-slate-600 text-lg md:text-xl font-medium leading-relaxed">
+          Desde 1994, VintageTone ha sido el refugio para músicos que no solo buscan una herramienta, sino un compañero
+          de
+          viaje. Nuestra tienda nació en el corazón de un taller de luthier, rescatando la magia de las maderas añejas y
+          los circuitos analógicos que definieron el rock, el funk y el blues.
+        </p>
+      </header>
 
-    <!-- Team Section -->
-    <section class="mt-32">
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-        <div class="space-y-2">
+      <!-- Detailed Sections -->
+      <div class="space-y-10">
+        <AboutCard v-for="(section, index) in sections" :key="index" v-bind="section" />
+      </div>
+
+      <!-- Team Section -->
+      <section class="mt-32">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div class="space-y-2">
             <span class="text-amber-500 font-black uppercase text-[10px] tracking-[0.4em]">
-                Expertos al servicio
+              Expertos al servicio
             </span>
             <h2 class="text-4xl md:text-6xl font-black text-slate-900 uppercase italic tracking-tighter leading-none">
-                Nuestro equipo</h2>
+              Nuestro equipo</h2>
+          </div>
         </div>
-      </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-        <TeamCard 
-          v-for="member in teamMembers" 
-          :key="member.id"
-          v-bind="member"
-        />
-      </div>
-    </section>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          <TeamCard v-for="member in teamMembers" :key="member.id" v-bind="member" />
+        </div>
+      </section>
+    </div>
   </div>
-</div>
 </template>
