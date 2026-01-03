@@ -21,6 +21,16 @@ const routes = [
         component: Contact
     },
     {
+        path: '/category/:category',
+        name: 'Category',
+        component: () => import('../views/Category.vue')
+    },
+    {
+        path: '/category/:category/:subcategory',
+        name: 'Subcategory',
+        component: () => import('../views/Category.vue')
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: NotFound
