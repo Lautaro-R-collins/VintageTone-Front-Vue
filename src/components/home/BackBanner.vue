@@ -8,7 +8,7 @@ const bannerImg = 'https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?
         <img :src="bannerImg" alt="VintageTone Bass"
             class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale-[0.3]" />
 
-        <!-- Deep Dark Overlay -->
+        <!-- Overlay -->
         <div class="absolute inset-0 bg-linear-to-r from-black via-black/40 to-transparent"></div>
 
         <!-- Content -->
