@@ -3,7 +3,7 @@
 
 <template>
     <section class="relative h-[30vh] md:h-[40vh] flex items-center justify-center overflow-hidden bg-slate-950">
-        <!-- Background Image with Overlay -->
+        <!-- Background Image -->
         <div class="absolute inset-0 z-0">
             <img 
                 src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=2070&auto=format&fit=crop" 
