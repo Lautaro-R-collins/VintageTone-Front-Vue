@@ -21,6 +21,37 @@ const routes = [
         component: Contact
     },
     {
+        path: '/category/:category',
+        name: 'Category',
+        component: () => import('../views/Category.vue')
+    },
+    {
+        path: '/category/:category/:subcategory',
+        name: 'Subcategory',
+        component: () => import('../views/Category.vue')
+    },
+    {
+        path: '/blog',
+        name: 'Blog',
+        component: () => import('../views/Blog.vue')
+    },
+    {
+        path: '/blog/:slug',
+        name: 'BlogArticle',
+        component: () => import('../views/BlogArticle.vue'),
+        props: true
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: () => import('../views/Login.vue')
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: () => import('../views/Register.vue')
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: NotFound

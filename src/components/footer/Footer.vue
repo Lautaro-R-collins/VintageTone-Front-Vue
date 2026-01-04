@@ -7,14 +7,17 @@ import { Mail, MapPin, Phone, Instagram, Youtube } from 'lucide-vue-next'
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
       <div class="space-y-6 col-span-1 md:col-span-2">
         <div class="flex items-center">
-          <router-link to="/" class="flex flex-col items-start cursor-pointer no-underline group">
-             <span class="text-3xl font-bold text-slate-950 tracking-[-0.05em] font-logo italic">
-              VintageTone
-            </span>
+          <router-link to="/" class="flex items-start cursor-pointer no-underline group">
+            <img 
+              src="/logoDesktop.png" 
+              alt="VintageTone" 
+              class="h-20 w-auto"
+            />
           </router-link>
         </div>
         <p class="max-w-xs text-xs leading-relaxed text-slate-800 font-medium uppercase tracking-wider">
-          Tu destino definitivo para el equipamiento musical con alma. Seleccionamos instrumentos que cuentan una historia.
+          Tu destino definitivo para el equipamiento musical con alma. Seleccionamos instrumentos que cuentan una
+          historia.
         </p>
         <div class="space-y-3 pt-4">
           <div class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-800">
@@ -50,8 +53,9 @@ import { Mail, MapPin, Phone, Instagram, Youtube } from 'lucide-vue-next'
         </ul>
       </div>
     </div>
-    
-    <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center text-[9px] tracking-[0.2em] uppercase font-black text-slate-500">
+
+    <div
+      class="max-w-7xl mx-auto mt-16 pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center text-[9px] tracking-[0.2em] uppercase font-black text-slate-500">
       <p>&copy; 2026 VintageTone Music Store. Todos los derechos reservados.</p>
       <div class="flex space-x-6 mt-6 md:mt-0">
         <a class="hover:text-amber-600 transition-all cursor-pointer hover:scale-110">

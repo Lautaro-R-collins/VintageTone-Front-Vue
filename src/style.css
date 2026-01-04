@@ -10,6 +10,5 @@
 @theme {
     --color-primary: #f59e0b;
     --color-primary-focus: #d97706;
-    --font-logo: "Libre Baskerville", serif;
     --breakpoint-xs: 400px;
 }

@@ -13,7 +13,7 @@ const items = [
 <template>
     <div class="bg-slate-950 overflow-hidden py-3 border-y border-white/5 relative">
         <div class="marquee-container flex items-center whitespace-nowrap">
-            <!-- First set of items -->
+            <!-- First set -->
             <div class="marquee-content flex items-center shrink-0">
                 <div v-for="(item, index) in items" :key="'a-' + index" class="flex items-center gap-4 px-12">
                     <component :is="item.icon" :size="14" class="text-amber-500" />
@@ -22,7 +22,7 @@ const items = [
                     </span>
                 </div>
             </div>
-            <!-- Second set of items (for seamless loop) -->
+            <!-- Second set -->
             <div class="marquee-content flex items-center shrink-0">
                 <div v-for="(item, index) in items" :key="'b-' + index" class="flex items-center gap-4 px-12">
                     <component :is="item.icon" :size="14" class="text-amber-500" />
