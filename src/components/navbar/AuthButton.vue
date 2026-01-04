@@ -5,7 +5,7 @@ import { User, LogIn, UserPlus } from 'lucide-vue-next'
 <template>
   <div class="dropdown dropdown-end cursor-pointer">
     <label tabindex="0" class="cursor-pointer">
-      <User :size="24" class="text-slate-900" />
+      <User :size="25" class="text-slate-900" />
     </label>
 
     <ul tabindex="0"
