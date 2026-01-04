@@ -76,5 +76,31 @@ export const mockProducts = [
         price: '2,100',
         image: guitarGibson,
         badge: 'Acoustic'
+    },
+    {
+        id: 10,
+        name: 'Vintage Guitarra Acustica',
+        category: 'Instrumentos',
+        price: '2,100',
+        image: guitarGibson,
+        badge: 'Acoustic'
+    },
+    {
+        id: 11,
+        name: 'Vintage Guitarra Acustica',
+        category: 'Instrumentos',
+        price: '2,100',
+        image: guitarGibson,
+        badge: 'Acoustic'
+    },
+    {
+        id: 12,
+        name: 'Vintage Guitarra Acustica',
+        category: 'Instrumentos',
+        price: '2,100',
+        image: guitarGibson,
+        badge: 'Acoustic'
     }
+
+
 ]
