@@ -7,10 +7,12 @@ import { Mail, MapPin, Phone, Instagram, Youtube } from 'lucide-vue-next'
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
       <div class="space-y-6 col-span-1 md:col-span-2">
         <div class="flex items-center">
-          <router-link to="/" class="flex flex-col items-start cursor-pointer no-underline group">
-            <span class="text-3xl font-bold text-slate-950 tracking-[-0.05em] font-logo italic">
-              VintageTone
-            </span>
+          <router-link to="/" class="flex items-start cursor-pointer no-underline group">
+            <img 
+              src="/logoDesktop.png" 
+              alt="VintageTone" 
+              class="h-20 w-auto"
+            />
           </router-link>
         </div>
         <p class="max-w-xs text-xs leading-relaxed text-slate-800 font-medium uppercase tracking-wider">
