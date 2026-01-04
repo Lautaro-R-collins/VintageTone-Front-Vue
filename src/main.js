@@ -2,6 +2,8 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import router from './router'
 import './style.css'
+// Toast styles
+import 'vue-sonner/style.css'
 import App from './App.vue'
 
 const app = createApp(App)
