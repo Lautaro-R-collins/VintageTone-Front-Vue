@@ -17,13 +17,13 @@ const props = defineProps({
 })
 
 const backgroundImage = computed(() => {
-    return props.image || '/assets/home/HeaderImg.webp' // Fallback
+    return props.image || '/assets/home/HeaderImg.webp' 
 })
 </script>
 
 <template>
     <section class="relative h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden bg-slate-950">
-        <!-- Background Image with Overlay -->
+        <!-- Background Image -->
         <div class="absolute inset-0 z-0">
             <img 
                 :src="backgroundImage" 
@@ -36,7 +36,7 @@ const backgroundImage = computed(() => {
 
         <!-- Content -->
         <div class="relative z-10 text-center px-6 max-w-4xl">
-            <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-[-0.02em] font-logo italic leading-tight mb-4 drop-shadow-2xl">
+            <h1 class="text-4xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-tight mb-4 drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
                 {{ title }}
             </h1>
             <p v-if="subtitle" class="text-amber-500 font-bold uppercase tracking-[0.3em] text-[10px] md:text-xs drop-shadow-lg">
