@@ -42,6 +42,12 @@ const routes = [
         props: true
     },
     {
+        path: '/product/:id',
+        name: 'ProductDetail',
+        component: () => import('../views/DetailProduct.vue'),
+        props: true
+    },
+    {
         path: '/login',
         name: 'Login',
         component: () => import('../views/Login.vue')
@@ -50,6 +56,11 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: () => import('../views/Register.vue')
+    },
+    {
+        path: '/checkout',
+        name: 'Checkout',
+        component: () => import('../views/Checkout.vue')
     },
     {
         path: '/:pathMatch(.*)*',
