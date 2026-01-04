@@ -8,6 +8,11 @@ const password = ref('')
 const showPassword = ref(false)
 const isLoading = ref(false)
 
+const touched = ref({
+    email: false,
+    password: false
+})
+
 // Validations
 const isEmailValid = computed(() => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -52,10 +57,18 @@ const handleLogin = async () => {
                         v-model="email"
                         type="email" 
                         required
+                        @blur="touched.email = true"
                         placeholder="tu@email.com"
                         class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-amber-500 focus:bg-white transition-all font-bold text-slate-900 placeholder:text-slate-400"
                     />
                 </div>
+                <!-- Error Messages -->
+                <p v-if="touched.email && !email" class="text-[10px] text-red-500 font-bold uppercase tracking-wider ml-1 mt-1">
+                    Completa este campo
+                </p>
+                <p v-else-if="email && !isEmailValid" class="text-[10px] text-red-500 font-bold uppercase tracking-wider ml-1 mt-1">
+                    Ingresa un correo electrónico válido
+                </p>
             </div>
 
             <!-- Password -->
@@ -72,6 +85,7 @@ const handleLogin = async () => {
                         v-model="password"
                         :type="showPassword ? 'text' : 'password'" 
                         required
+                        @blur="touched.password = true"
                         placeholder="••••••••"
                         class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-12 outline-none focus:border-amber-500 focus:bg-white transition-all font-bold text-slate-900 placeholder:text-slate-400"
                     />
@@ -84,6 +98,13 @@ const handleLogin = async () => {
                         <EyeOff v-else :size="18" />
                     </button>
                 </div>
+                <!-- Error Messages -->
+                <p v-if="touched.password && !password" class="text-[10px] text-red-500 font-bold uppercase tracking-wider ml-1 mt-1">
+                    Completa este campo
+                </p>
+                <p v-else-if="password && !isPasswordValid" class="text-[10px] text-red-500 font-bold uppercase tracking-wider ml-1 mt-1">
+                    La contraseña debe tener al menos 6 caracteres
+                </p>
             </div>
 
             <!-- Submit Button -->
