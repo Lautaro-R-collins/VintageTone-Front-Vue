@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ArrowRight, Heart } from 'lucide-vue-next'
+import { ArrowRight, Heart, ShoppingBag } from 'lucide-vue-next'
+import { useCartStore } from '../../stores/cart'
 
 const props = defineProps({
     product: {
@@ -10,6 +11,7 @@ const props = defineProps({
 })
 
 const router = useRouter()
+const cartStore = useCartStore()
 
 const goToProduct = () => {
     // Navigate to product detail (route to be defined later)
@@ -19,6 +21,11 @@ const goToProduct = () => {
 const toggleFavorite = (e) => {
     e.stopPropagation() // Prevent triggering the card click
     // logic here
+}
+
+const addToCart = (e) => {
+    e.stopPropagation()
+    cartStore.addItem(props.product)
 }
 </script>
 
@@ -38,6 +45,11 @@ const toggleFavorite = (e) => {
             <button @click="toggleFavorite"
                 class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-slate-400 hover:text-red-500 transition-colors cursor-pointer">
                 <Heart :size="18" />
+            </button>
+            <button @click="addToCart"
+                class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-slate-400 hover:text-amber-500 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                :disabled="(product.stock || 0) <= 0">
+                <ShoppingBag :size="18" />
             </button>
         </div>
 

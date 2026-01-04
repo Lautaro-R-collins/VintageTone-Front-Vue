@@ -1,6 +1,7 @@
+```vue
 <script setup>
 import { ref } from 'vue'
-import { Menu as MenuIcon, X, ChevronDown } from 'lucide-vue-next'
+import { Menu as MenuIcon, X, ChevronDown, ShoppingBag } from 'lucide-vue-next'
 import NavbarBrand from './NavbarBrand.vue'
 import NavbarActions from './NavbarActions.vue'
 import NavbarLinks from './NavbarLinks.vue'
