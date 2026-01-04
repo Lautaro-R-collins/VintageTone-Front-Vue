@@ -55,7 +55,7 @@ const closeBar = () => {
 </template>
 
 <style scoped>
-/* Main bar transition */
+/* bar transition */
 .bar-leave-active {
     transition: all 0.3s ease-in;
 }
@@ -66,7 +66,7 @@ const closeBar = () => {
     border-bottom-width: 0;
 }
 
-/* Slider animation */
+/* slider animation */
 .slide-up-enter-active,
 .slide-up-leave-active {
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);

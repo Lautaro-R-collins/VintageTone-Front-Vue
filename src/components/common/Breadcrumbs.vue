@@ -31,7 +31,7 @@ const isHome = computed(() => route.path === '/')
 <template>
     <div v-if="!isHome" class="bg-white border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-6 py-3">
-            <div class="text-[16px] uppercase tracking-[0.2em] font-bold breadcrumbs">
+            <div class="text-[9px] md:text-[16px]  uppercase tracking-[0.2em] font-bold breadcrumbs">
                 <ul>
                     <li v-for="crumb in breadcrumbs" :key="crumb.to">
                         <router-link v-if="!crumb.current" :to="crumb.to"
@@ -58,7 +58,6 @@ const isHome = computed(() => route.path === '/')
     opacity: 1;
 }
 
-/* Override DaisyUI default if needed to match brand colors */
 .breadcrumbs ul li span,
 .breadcrumbs ul li a {
     display: flex;
