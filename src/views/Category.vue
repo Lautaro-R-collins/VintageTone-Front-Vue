@@ -5,6 +5,7 @@ import { mockProducts } from '../mocks/products'
 import CategoryHeader from '../components/category/CategoryHeader.vue'
 import CardProduct from '../components/product/CardProduct.vue'
 import Breadcrumbs from '../components/common/Breadcrumbs.vue'
+import Pagination from '../components/ui/Pagination.vue'
 
 const route = useRoute()
 
@@ -164,16 +165,14 @@ const paginatedProducts = computed(() => {
     return filteredProducts.value.slice(start, end)
 })
 
-const goToPage = (page) => {
-    if (page >= 1 && page <= totalPages.value) {
-        currentPage.value = page
-        window.scrollTo({ top: 400, behavior: 'smooth' })
-    }
-}
-
 // Reset page when category changes
 watch([categorySlug, subcategorySlug], () => {
     currentPage.value = 1
+})
+
+// Scroll to top when page changes
+watch(currentPage, () => {
+    window.scrollTo({ top: 400, behavior: 'smooth' })
 })
 </script>
 
@@ -191,21 +190,6 @@ watch([categorySlug, subcategorySlug], () => {
                 <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
                     Mostrando {{ paginatedProducts.length }} de {{ filteredProducts.length }} productos
                 </p>
-
-                <div v-if="totalPages > 1" class="join mt-4 md:mt-0">
-                    <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1"
-                        class="join-item btn btn-xs bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white disabled:bg-slate-50">
-                        «
-                    </button>
-                    <button v-for="page in totalPages" :key="page" @click="goToPage(page)" class="join-item btn btn-xs"
-                        :class="currentPage === page ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100'">
-                        {{ page }}
-                    </button>
-                    <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages"
-                        class="join-item btn btn-xs bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white disabled:bg-slate-50">
-                        »
-                    </button>
-                </div>
             </div>
 
             <!-- Products Grid -->
@@ -215,7 +199,7 @@ watch([categorySlug, subcategorySlug], () => {
 
             <!-- Empty State -->
             <div v-else class="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-200">
-                <h3 class="text-xl font-bold text-slate-900 uppercase tracking-widest mb-2 italic font-logo">No se
+                <h3 class="text-xl md:text-2xl font-bold text-slate-900 uppercase tracking-widest mb-2">No se
                     encontraron productos</h3>
                 <p class="text-slate-500 text-xs uppercase tracking-widest">Intenta con otra categoría o vuelve más
                     pronto</p>
@@ -226,22 +210,7 @@ watch([categorySlug, subcategorySlug], () => {
             </div>
 
             <!-- Bottom Pagination -->
-            <div v-if="totalPages > 1" class="flex justify-center mt-16">
-                <div class="join">
-                    <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1"
-                        class="join-item btn btn-sm bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white">
-                        Anterior
-                    </button>
-                    <button v-for="page in totalPages" :key="page" @click="goToPage(page)" class="join-item btn btn-sm"
-                        :class="currentPage === page ? 'bg-slate-900 border-slate-900 text-white font-bold' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100'">
-                        {{ page }}
-                    </button>
-                    <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages"
-                        class="join-item btn btn-sm bg-white border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white">
-                        Siguiente
-                    </button>
-                </div>
-            </div>
+            <Pagination v-if="totalPages > 1" v-model:currentPage="currentPage" :totalPages="totalPages" />
         </div>
     </div>
 </template>
