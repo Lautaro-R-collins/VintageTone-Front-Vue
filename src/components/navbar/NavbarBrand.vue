@@ -1,15 +1,17 @@
 <template>
-    <router-link to="/" class="flex flex-col items-center cursor-pointer no-underline group">
+    <router-link to="/" class="flex items-center cursor-pointer no-underline group">
         <!-- Desktop Logo -->
-        <span
-            class="hidden sm:block text-3xl font-bold text-slate-950 tracking-[-0.05em] leading-none font-logo italic">
-            VintageTone
-        </span>
+        <img 
+            src="/logoDesktop.png" 
+            alt="VintageTone" 
+            class="hidden sm:block h-14 w-auto"
+        />
         <!-- Mobile Logo -->
-        <span
-            class="block sm:hidden text-3xl font-bold text-slate-950 tracking-[-0.05em] leading-none font-logo italic">
-            VT
-        </span>
+        <img 
+            src="/logoMobile.png" 
+            alt="VintageTone" 
+            class="block sm:hidden h-10 w-auto"
+        />
     </router-link>
 </template>
 
