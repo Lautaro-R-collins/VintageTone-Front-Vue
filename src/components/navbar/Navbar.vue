@@ -29,11 +29,11 @@ const closeMenu = () => {
 
         <!-- Sub-Navbar mobile -->
         <div class="bg-slate-950 w-full shadow-xl">
-            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center">
 
                 <!-- Mobile Toggle -->
                 <button @click="toggleMenu"
-                    class="sm:hidden w-full py-2.5 px-6 flex items-center justify-between text-[10px] font-black uppercase tracking-[0.3em] text-white hover:bg-white/5 transition-all">
+                    class="lg:hidden w-full py-2.5 px-6 flex items-center justify-between text-[10px] font-black uppercase tracking-[0.3em] text-white hover:bg-white/5 transition-all">
                     <div class="flex items-center gap-3">
                         <MenuIcon v-if="!isMenuOpen" :size="16" :stroke-width="2.5" />
                         <X v-else :size="16" :stroke-width="2.5" />
@@ -45,7 +45,7 @@ const closeMenu = () => {
 
                 <!-- Links & Dropdown Stack -->
                 <div class="w-full overflow-hidden transition-all duration-300 ease-in-out"
-                    :class="[isMenuOpen ? 'max-h-[500px] opacity-100 border-t border-white/5' : 'max-h-0 sm:max-h-full opacity-0 sm:opacity-100 overflow-hidden sm:overflow-visible']">
+                    :class="[isMenuOpen ? 'max-h-[500px] opacity-100 border-t border-white/5' : 'max-h-0 lg:max-h-full opacity-0 lg:opacity-100 overflow-hidden lg:overflow-visible']">
                     <NavbarLinks @link-clicked="closeMenu" />
                 </div>
             </div>
