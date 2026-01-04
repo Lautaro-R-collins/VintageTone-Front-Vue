@@ -14,7 +14,7 @@ const categories = [
 </script>
 
 <template>
-    <section class="py-20 bg-white">
+    <section class="py-10 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-3xl font-black text-slate-900 uppercase italic tracking-tighter mb-12">
                 Categorías
