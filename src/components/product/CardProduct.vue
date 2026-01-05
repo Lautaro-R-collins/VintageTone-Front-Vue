@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router'
 import { ArrowRight, Heart, ShoppingBag } from 'lucide-vue-next'
 import { useCartStore } from '../../stores/cart'
+import { useFavoritesStore } from '../../stores/favorites'
 
 const props = defineProps({
     product: {
@@ -12,6 +13,7 @@ const props = defineProps({
 
 const router = useRouter()
 const cartStore = useCartStore()
+const favoritesStore = useFavoritesStore()
 
 const goToProduct = () => {
     // Navigate to product detail (route to be defined later)
@@ -20,7 +22,7 @@ const goToProduct = () => {
 
 const toggleFavorite = (e) => {
     e.stopPropagation() // Prevent triggering the card click
-    // logic here
+    favoritesStore.toggleFavorite(props.product)
 }
 
 const addToCart = (e) => {
@@ -43,8 +45,9 @@ const addToCart = (e) => {
         <div
             class="absolute top-6 right-6 flex flex-col gap-3 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-500">
             <button @click="toggleFavorite"
-                class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-slate-400 hover:text-red-500 transition-colors cursor-pointer">
-                <Heart :size="18" />
+                class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-slate-400 hover:text-red-500 transition-colors cursor-pointer"
+                :class="{ 'text-red-500 bg-red-50!': favoritesStore.isFavorite(product.id) }">
+                <Heart :size="18" :class="{ 'fill-current': favoritesStore.isFavorite(product.id) }" />
             </button>
             <button @click="addToCart"
                 class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-slate-400 hover:text-amber-500 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"

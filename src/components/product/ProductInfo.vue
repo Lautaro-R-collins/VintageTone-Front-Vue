@@ -74,15 +74,15 @@ const buyNow = () => {
         <div class="space-y-6 pt-4">
             <div class="flex flex-col sm:flex-row gap-4">
                 <!-- Quantity Selector -->
-                <div class="flex items-center bg-white border-2 border-slate-100 rounded-2xl p-1 shadow-sm">
+                <div class="flex items-center bg-slate-900 border-2 border-slate-100 rounded-2xl p-1 shadow-sm">
                     <button @click="decrement"
-                        class="p-4 hover:bg-slate-50 rounded-xl transition-colors text-slate-400 hover:text-slate-900 disabled:opacity-30"
+                        class="p-4 hover:bg-slate-50 cursor-pointer rounded-xl transition-colors text-white hover:text-slate-950 disabled:opacity-30"
                         :disabled="quantity <= 1">
                         <Minus :size="18" />
                     </button>
-                    <span class="w-12 text-center font-black text-xl italic">{{ quantity }}</span>
+                    <span class="w-12 text-center text-white font-black text-xl italic">{{ quantity }}</span>
                     <button @click="increment"
-                        class="p-4 hover:bg-slate-50 rounded-xl transition-colors text-slate-400 hover:text-slate-900 disabled:opacity-30"
+                        class="p-4 hover:bg-slate-50 cursor-pointer rounded-xl transition-colors text-white hover:text-slate-950 disabled:opacity-30"
                         :disabled="quantity >= product.stock">
                         <Plus :size="18" />
                     </button>
