@@ -9,7 +9,7 @@ const favoritesStore = useFavoritesStore()
 </script>
 
 <template>
-    <div class="flex items-center space-x-4 sm:space-x-6">
+    <div class="flex items-center gap-2">
         <router-link to="/favorites" class="cursor-pointer relative group">
             <Heart :size="25" class="group-hover:scale-110 group-hover:text-red-500 transition-all duration-300" />
             <!-- Badge -->
