@@ -60,12 +60,19 @@ const routes = [
     {
         path: '/checkout',
         name: 'Checkout',
-        component: () => import('../views/Checkout.vue')
+        component: () => import('../views/Checkout.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path: '/favorites',
         name: 'Favorites',
         component: () => import('../views/Favorites.vue')
+    },
+    {
+        path: '/profile',
+        name: 'Profile',
+        component: () => import('../views/Profile.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path: '/:pathMatch(.*)*',
@@ -80,6 +87,23 @@ const router = createRouter({
     scrollBehavior(to, from, savedPosition) {
         // always scroll to top
         return { top: 0 }
+    }
+})
+
+// Navigation Guards
+import { useAuthStore } from '../stores/auth'
+
+router.beforeEach(async (to, from, next) => {
+    const authStore = useAuthStore()
+
+    // We should probably wait for checkAuth in App.vue to finish, 
+    // but for simple navigation, we check if it requires auth
+    if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+        next('/login')
+    } else if ((to.name === 'Login' || to.name === 'Register') && authStore.isAuthenticated) {
+        next('/profile')
+    } else {
+        next()
     }
 })
 

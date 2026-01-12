@@ -3,10 +3,14 @@ import { ref, computed } from 'vue'
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-vue-next'
 import { toast } from 'vue-sonner'
 
+import { useAuthStore } from '../../stores/auth'
+import { useRouter } from 'vue-router'
+
 const email = ref('')
 const password = ref('')
 const showPassword = ref(false)
-const isLoading = ref(false)
+const authStore = useAuthStore()
+const router = useRouter()
 
 const touched = ref({
     email: false,
@@ -26,12 +30,19 @@ const isFormValid = computed(() => isEmailValid.value && isPasswordValid.value)
 const handleLogin = async () => {
     if (!isFormValid.value) return
 
-    isLoading.value = true
-    setTimeout(() => {
-        isLoading.value = false
+    const result = await authStore.login({
+        email: email.value,
+        password: password.value
+    })
+
+    if (result.success) {
         toast.success('¡Bienvenido de nuevo!')
-    }, 1200)
+        router.push('/profile')
+    } else {
+        toast.error(result.message)
+    }
 }
+const isLoading = computed(() => authStore.isLoading)
 </script>
 
 <template>

@@ -3,12 +3,16 @@ import { ref, computed } from 'vue'
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight } from 'lucide-vue-next'
 import { toast } from 'vue-sonner'
 
+import { useAuthStore } from '../../stores/auth'
+import { useRouter } from 'vue-router'
+
 const name = ref('')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const showPassword = ref(false)
-const isLoading = ref(false)
+const authStore = useAuthStore()
+const router = useRouter()
 
 // Field tracking
 const touched = ref({
@@ -38,13 +42,20 @@ const isFormValid = computed(() => {
 const handleRegister = async () => {
     if (!isFormValid.value) return
 
-    isLoading.value = true
-    // Simulando una llamada a la API
-    setTimeout(() => {
-        isLoading.value = false
+    const result = await authStore.register({
+        userName: name.value,
+        email: email.value,
+        password: password.value
+    })
+
+    if (result.success) {
         toast.success('Cuenta creada con éxito. ¡Bienvenido!')
-    }, 1500)
+        router.push('/profile')
+    } else {
+        toast.error(result.message)
+    }
 }
+const isLoading = computed(() => authStore.isLoading)
 </script>
 
 <template>
