@@ -40,10 +40,7 @@ export const useFavoritesStore = defineStore('favorites', () => {
     }
 
     const clearFavorites = () => {
-        // Use splice to modify the array in place to ensure reactivity triggers properly
         favorites.value.splice(0, favorites.value.length)
-
-        // Also force update local storage immediately just in case watch is slow
         localStorage.setItem('vintage_favorites', JSON.stringify([]))
 
         toast.info('Favoritos eliminados', {
