@@ -3,8 +3,8 @@ import api from '../services/api'
 import { ref, computed } from 'vue'
 
 export const useAuthStore = defineStore('auth', () => {
-    const user = ref(JSON.parse(localStorage.getItem('auth_user')) || null)
-    const isAuthenticated = ref(!!localStorage.getItem('auth_user'))
+    const user = ref(null)
+    const isAuthenticated = ref(false)
 
     const isLoading = ref(false)
 
@@ -12,13 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
         isLoading.value = true
         try {
             const response = await api.post('/auth/login', credentials)
-            const { user: userData } = response.data
-
-            if (userData) {
-                user.value = userData
-                localStorage.setItem('auth_user', JSON.stringify(userData))
-            }
-
+            user.value = response.data.userData
             isAuthenticated.value = true
             return { success: true }
         } catch (error) {
@@ -32,6 +26,19 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
+    async function checkAuth() {
+        try {
+            const response = await api.get('/auth/profile')
+            user.value = response.data
+            isAuthenticated.value = true
+            return true
+        } catch (error) {
+            user.value = null
+            isAuthenticated.value = false
+            return false
+        }
+    }
+
     async function register(userData) {
         isLoading.value = true
         try {
@@ -41,6 +48,7 @@ export const useAuthStore = defineStore('auth', () => {
                 password: userData.password
             })
 
+            user.value = response.data.userData
             isAuthenticated.value = true
 
             return { success: true }
@@ -55,12 +63,15 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
-    function logout() {
-        api.post('/auth/logout').finally(() => {
+    async function logout() {
+        try {
+            await api.post('/auth/logout')
+        } catch (error) {
+            console.error('Logout error:', error)
+        } finally {
             user.value = null
             isAuthenticated.value = false
-            localStorage.removeItem('auth_user')
-        })
+        }
     }
 
     return {
@@ -69,6 +80,7 @@ export const useAuthStore = defineStore('auth', () => {
         isAuthenticated,
         login,
         register,
-        logout
+        logout,
+        checkAuth
     }
 })
