@@ -8,7 +8,7 @@ const router = useRouter()
 
 const handleLogout = () => {
   authStore.logout()
-  router.push('/login')
+  router.push('/')
   const elem = document.activeElement
   if (elem) {
     elem.blur()
@@ -36,7 +36,7 @@ const handleClick = () => {
       <template v-if="authStore.isAuthenticated">
         <li class="px-4 py-2 mb-1 border-b border-slate-50">
           <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Sesión Iniciada</p>
-          <p class="text-xs font-bold text-slate-900 truncate">{{ authStore.user?.name || 'Usuario' }}</p>
+          <p class="text-xs font-bold text-slate-900 truncate">{{ authStore.user?.userName || 'Usuario' }}</p>
         </li>
         <li>
           <router-link to="/profile" @click="handleClick"

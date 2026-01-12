@@ -50,7 +50,7 @@ const handleRegister = async () => {
 
     if (result.success) {
         toast.success('Cuenta creada con éxito. ¡Bienvenido!')
-        router.push('/')
+        router.push('/profile')
     } else {
         toast.error(result.message)
     }

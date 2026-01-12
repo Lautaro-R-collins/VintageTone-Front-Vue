@@ -37,7 +37,7 @@ const handleLogin = async () => {
 
     if (result.success) {
         toast.success('¡Bienvenido de nuevo!')
-        router.push('/')
+        router.push('/profile')
     } else {
         toast.error(result.message)
     }
