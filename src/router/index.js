@@ -69,6 +69,12 @@ const routes = [
         component: () => import('../views/Favorites.vue')
     },
     {
+        path: '/Orders',
+        name: 'Orders',
+        component: () => import('../views/Orders.vue'),
+        meta: { requiresAuth: true, onlyFromProfile: true }
+    },
+    {
         path: '/profile',
         name: 'Profile',
         component: () => import('../views/Profile.vue'),
@@ -101,6 +107,9 @@ router.beforeEach(async (to, from, next) => {
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
         next('/login')
     } else if ((to.name === 'Login' || to.name === 'Register') && authStore.isAuthenticated) {
+        next('/profile')
+    } else if (to.meta.onlyFromProfile && from.name !== 'Profile') {
+        // Strict access: Only allow entering Orders from Profile
         next('/profile')
     } else {
         next()
