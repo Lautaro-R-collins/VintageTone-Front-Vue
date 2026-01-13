@@ -69,6 +69,18 @@ const routes = [
         component: () => import('../views/Favorites.vue')
     },
     {
+        path: '/Orders',
+        name: 'Orders',
+        component: () => import('../views/Orders.vue'),
+        meta: { requiresAuth: true, onlyFromProfile: true }
+    },
+    {
+        path: '/admin',
+        name: 'AdminPanel',
+        component: () => import('../views/AdminPanel.vue'),
+        meta: { requiresAuth: true, requiresAdmin: true }
+    },
+    {
         path: '/profile',
         name: 'Profile',
         component: () => import('../views/Profile.vue'),
@@ -100,7 +112,13 @@ router.beforeEach(async (to, from, next) => {
     // but for simple navigation, we check if it requires auth
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
         next('/login')
+    } else if (to.meta.requiresAdmin && !authStore.user?.isAdmin) {
+        // Strict admin protection
+        next('/profile')
     } else if ((to.name === 'Login' || to.name === 'Register') && authStore.isAuthenticated) {
+        next('/profile')
+    } else if (to.meta.onlyFromProfile && from.name !== 'Profile') {
+        // Strict access: Only allow entering Orders from Profile
         next('/profile')
     } else {
         next()

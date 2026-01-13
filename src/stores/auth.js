@@ -74,6 +74,34 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
+    async function uploadAvatar(file) {
+        isLoading.value = true
+        try {
+            const formData = new FormData()
+            formData.append('avatar', file)
+
+            const response = await api.put('/auth/upload-avatar', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+
+            if (user.value) {
+                user.value.avatar = response.data.avatar
+            }
+
+            return { success: true, avatar: response.data.avatar }
+        } catch (error) {
+            console.error('Upload avatar error:', error)
+            return {
+                success: false,
+                message: error.response?.data?.message || 'Error al subir la imagen'
+            }
+        } finally {
+            isLoading.value = false
+        }
+    }
+
     return {
         user,
         isLoading,
@@ -81,6 +109,7 @@ export const useAuthStore = defineStore('auth', () => {
         login,
         register,
         logout,
-        checkAuth
+        checkAuth,
+        uploadAvatar
     }
 })
