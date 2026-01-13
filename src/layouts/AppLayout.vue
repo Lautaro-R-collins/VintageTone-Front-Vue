@@ -8,7 +8,7 @@ import { Toaster } from 'vue-sonner'
 
 <template>
   <div class="min-h-screen flex flex-col bg-slate-50 selection:bg-amber-100 selection:text-amber-900">
-    <Toaster position="top-right" richColors :toastOptions="{ style: { marginTop: '80px', marginRight: '20px' } }" />
+    <Toaster position="bottom-right" richColors :toastOptions="{ style: { marginBottom: '20px', marginRight: '20px' } }" />
     <CartDrawer />
     <!-- <AnnouncementBar /> -->
     <Navbar />
