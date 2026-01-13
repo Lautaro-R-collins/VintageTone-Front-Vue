@@ -1,17 +1,62 @@
 <script setup>
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
-import { User, Mail, ShieldCheck, LogOut, Package, Heart, History, Camera } from 'lucide-vue-next'
+import { User, Mail, ShieldCheck, LogOut, Package, Heart, History, Camera, Loader2 } from 'lucide-vue-next'
 import { toast } from 'vue-sonner'
+import { ref, computed } from 'vue'
+import { BASE_URL } from '../services/api'
 
 const authStore = useAuthStore()
 const router = useRouter()
+const fileInput = ref(null)
+const isUploading = ref(false)
 
 const handleLogout = async () => {
   await authStore.logout()
   toast.success('Sesión cerrada correctamente')
   router.push('/')
 }
+
+const triggerFileInput = () => {
+  if (fileInput.value) {
+    fileInput.value.click()
+  }
+}
+
+const handleFileUpload = async (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+
+  if (!file.type.startsWith('image/')) {
+    toast.error('Por favor selecciona una imagen válida')
+    return
+  }
+
+  if (file.size > 2 * 1024 * 1024) {
+    toast.error('La imagen es demasiado grande (máx 2MB)')
+    return
+  }
+
+  isUploading.value = true
+  const result = await authStore.uploadAvatar(file)
+  isUploading.value = false
+
+  if (result.success) {
+    toast.success('Foto de perfil actualizada')
+  } else {
+    toast.error(result.message)
+  }
+}
+
+const avatarUrl = computed(() => {
+  const avatar = authStore.user?.avatar
+  if (!avatar) return null
+  if (avatar.startsWith('http') || avatar.startsWith('data:')) {
+    return avatar
+  }
+  const cleanPath = avatar.startsWith('/') ? avatar.substring(1) : avatar
+  return `${BASE_URL.replace(/\/$/, '')}/${cleanPath}`
+})
 </script>
 
 <template>
@@ -26,12 +71,29 @@ const handleLogout = async () => {
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
           <!-- Avatar Section -->
           <div class="relative">
-            <div class="w-32 h-32 rounded-2xl bg-slate-900 flex items-center justify-center text-amber-500 overflow-hidden border-4 border-slate-50">
-              <img v-if="authStore.user?.avatar" :src="authStore.user.avatar" alt="Avatar" class="w-full h-full object-cover" />
+            <input 
+              type="file" 
+              ref="fileInput" 
+              class="hidden" 
+              accept="image/*"
+              @change="handleFileUpload"
+            />
+            <div class="w-32 h-32 rounded-2xl bg-slate-900 flex items-center justify-center text-amber-500 overflow-hidden border-4 border-slate-50 relative">
+              <img v-if="avatarUrl" :src="avatarUrl" alt="Avatar" class="w-full h-full object-cover" />
               <User v-else :size="48" />
+              
+              <!-- Loading Overlay -->
+              <div v-if="isUploading" class="absolute inset-0 bg-black/60 flex items-center justify-center">
+                <Loader2 :size="24" class="text-amber-500 animate-spin" />
+              </div>
             </div>
-            <button class="absolute -bottom-2 -right-2 bg-amber-500 text-slate-950 p-2 rounded-xl shadow-lg hover:scale-110 transition-transform cursor-pointer">
-              <Camera :size="16" />
+            <button 
+              type="button"
+              @click.stop="triggerFileInput"
+              :disabled="isUploading"
+              class="absolute -bottom-2 -right-2 bg-amber-500 text-slate-950 p-2 rounded-xl shadow-lg hover:scale-110 transition-transform cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed z-20">
+              <Camera v-if="!isUploading" :size="16" />
+              <Loader2 v-else :size="16" class="animate-spin" />
             </button>
           </div>
 
