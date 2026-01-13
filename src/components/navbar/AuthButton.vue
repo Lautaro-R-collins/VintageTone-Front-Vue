@@ -1,5 +1,5 @@
 <script setup>
-import { LogIn, UserPlus, LogOut, Settings } from 'lucide-vue-next'
+import { LogIn, UserPlus, LogOut, Settings, LayoutDashboard } from 'lucide-vue-next'
 import { useAuthStore } from '../../stores/auth'
 import { useRouter } from 'vue-router'
 import UserAvatar from './UserAvatar.vue'
@@ -38,6 +38,13 @@ const handleClick = () => {
         <li>
           <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Sesión Iniciada</p>
           <p class="text-xs font-bold text-slate-900 truncate">Hola, {{ authStore.user?.userName }}</p>
+        </li>
+        <li v-if="authStore.user?.isAdmin">
+          <router-link to="/admin" @click="handleClick"
+            class="flex items-center gap-3 py-3 px-4 rounded-xl bg-slate-950 text-amber-500 font-black text-xs uppercase tracking-[0.2em] hover:bg-amber-500 hover:text-slate-950 transition-all group">
+            <LayoutDashboard :size="18" class="group-hover:scale-110 transition-transform" />
+            Panel Admin
+          </router-link>
         </li>
         <li>
           <router-link to="/profile" @click="handleClick"
