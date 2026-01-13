@@ -1,7 +1,8 @@
 <script setup>
-import { User, LogIn, UserPlus, LogOut, Settings } from 'lucide-vue-next'
+import { LogIn, UserPlus, LogOut, Settings } from 'lucide-vue-next'
 import { useAuthStore } from '../../stores/auth'
 import { useRouter } from 'vue-router'
+import UserAvatar from './UserAvatar.vue'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -26,7 +27,7 @@ const handleClick = () => {
 <template>
   <div class="dropdown dropdown-end cursor-pointer">
     <label tabindex="0" class="cursor-pointer">
-      <User :size="25" class="text-slate-900" />
+      <UserAvatar />
     </label>
 
     <ul tabindex="0"
@@ -34,9 +35,9 @@ const handleClick = () => {
       
       <!-- Si el usuario está autenticado -->
       <template v-if="authStore.isAuthenticated">
-        <li class="px-4 py-2 mb-1 border-b border-slate-50">
+        <li>
           <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Sesión Iniciada</p>
-          <p class="text-xs font-bold text-slate-900 truncate">{{ authStore.user?.userName || 'Usuario' }}</p>
+          <p class="text-xs font-bold text-slate-900 truncate">Hola, {{ authStore.user?.userName }}</p>
         </li>
         <li>
           <router-link to="/profile" @click="handleClick"
