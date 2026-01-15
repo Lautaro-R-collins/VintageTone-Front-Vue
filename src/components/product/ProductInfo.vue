@@ -44,7 +44,7 @@ const buyNow = () => {
                 {{ product.name }}
             </h1>
             <div class="flex items-center gap-4">
-                <span class="text-3xl font-black text-slate-900">${{ product.price }}</span>
+                <span class="text-3xl font-black text-slate-900">${{ typeof product.price === 'number' ? product.price.toLocaleString() : product.price }}</span>
                 <span v-if="product.stock > 0" class="badge bg-emerald-50 text-emerald-600 border-none font-bold p-3">
                     En Stock ({{ product.stock }})
                 </span>
