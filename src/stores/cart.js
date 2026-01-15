@@ -20,10 +20,28 @@ export const useCartStore = defineStore('cart', () => {
     // Getters
     const totalItems = computed(() => items.value.reduce((acc, item) => acc + item.quantity, 0))
 
-    const totalPrice = computed(() => {
+    const subtotalPrice = computed(() => {
         return items.value.reduce((acc, item) => {
             const price = typeof item.price === 'number' ? item.price : parseFloat(String(item.price).replace(/,/g, ''))
             return acc + (price * item.quantity)
+        }, 0)
+    })
+
+    const totalPrice = computed(() => {
+        return items.value.reduce((acc, item) => {
+            const price = typeof item.price === 'number' ? item.price : parseFloat(String(item.price).replace(/,/g, ''))
+            const discount = item.discount || 0
+            const finalPrice = price * (1 - discount / 100)
+            return acc + (finalPrice * item.quantity)
+        }, 0)
+    })
+
+    const totalSavings = computed(() => {
+        return items.value.reduce((acc, item) => {
+            if (!item.discount) return acc
+            const price = typeof item.price === 'number' ? item.price : parseFloat(String(item.price).replace(/,/g, ''))
+            const savings = price * (item.discount / 100)
+            return acc + (savings * item.quantity)
         }, 0)
     })
 
@@ -52,8 +70,10 @@ export const useCartStore = defineStore('cart', () => {
             // Ensure we have a clean item object with consistent fields
             const itemToAdd = {
                 ...product,
+                _id: productId, // Ensure we keep original ID
                 id: productId, // Fallback for components expecting .id
                 quantity,
+                discount: product.discount || 0, // Include discount
                 image: product.images?.[0] || product.image
             }
             items.value.push(itemToAdd)
@@ -95,7 +115,9 @@ export const useCartStore = defineStore('cart', () => {
         items,
         isDrawerOpen,
         totalItems,
+        subtotalPrice,
         totalPrice,
+        totalSavings,
         toggleDrawer,
         addItem,
         removeItem,
