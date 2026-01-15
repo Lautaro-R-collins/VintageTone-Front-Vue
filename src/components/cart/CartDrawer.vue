@@ -84,10 +84,10 @@ const formatPrice = (price) => {
                 </div>
 
                 <div v-else class="space-y-8">
-                    <div v-for="item in items" :key="item.id" class="flex gap-6 group">
+                    <div v-for="item in items" :key="item._id || item.id" class="flex gap-6 group">
                         <!-- Item Image -->
                         <div class="w-24 h-32 bg-slate-100 rounded-2xl overflow-hidden relative shrink-0 border border-slate-100">
-                            <img :src="item.image" :alt="item.name" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                            <img :src="item.images?.length > 0 ? item.images[0] : item.image" :alt="item.name" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         </div>
 
                         <!-- Item Info -->
@@ -97,7 +97,7 @@ const formatPrice = (price) => {
                                     <h4 class="text-sm font-black text-slate-950 uppercase italic tracking-tight pr-4">
                                         {{ item.name }}
                                     </h4>
-                                    <button @click="cartStore.removeItem(item.id)" class="text-slate-300 hover:text-red-500 transition-colors cursor-pointer">
+                                    <button @click="cartStore.removeItem(item._id || item.id)" class="text-slate-300 hover:text-red-500 transition-colors cursor-pointer">
                                         <Trash2 :size="16" />
                                     </button>
                                 </div>
@@ -111,13 +111,13 @@ const formatPrice = (price) => {
                                         <Minus :size="12" />
                                     </button>
                                     <span class="w-8 text-center text-xs font-black italic">{{ item.quantity }}</span>
-                                    <button @click="cartStore.addItem(item, 1)" :disabled="item.quantity >= item.stock" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-all text-slate-400 hover:text-slate-950 disabled:opacity-30 cursor-pointer">
+                                    <button @click="cartStore.addItem(item, 1)" :disabled="item.quantity >= (item.stock || 0)" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-all text-slate-400 hover:text-slate-950 disabled:opacity-30 cursor-pointer">
                                         <Plus :size="12" />
                                     </button>
                                 </div>
                                 <div class="text-right">
                                     <p class="text-base font-black text-slate-950 italic">
-                                        ${{ (item.price.replace(/,/g, '') * item.quantity).toLocaleString() }}
+                                        {{ formatPrice((typeof item.price === 'number' ? item.price : parseFloat(String(item.price).replace(/,/g, ''))) * item.quantity) }}
                                     </p>
                                 </div>
                             </div>
