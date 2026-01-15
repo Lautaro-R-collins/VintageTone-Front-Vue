@@ -20,12 +20,12 @@ export const useFavoritesStore = defineStore('favorites', () => {
     const count = computed(() => favorites.value.length)
 
     const isFavorite = (productId) => {
-        return favorites.value.some(p => p.id === productId)
+        return favorites.value.some(p => (p._id || p.id) === productId)
     }
 
     // Actions
     const toggleFavorite = (product) => {
-        const index = favorites.value.findIndex(p => p.id === product.id)
+        const index = favorites.value.findIndex(p => (p._id || p.id) === (product._id || product.id))
         if (index === -1) {
             favorites.value.push(product)
             toast.success('Agregado a favoritos', {
