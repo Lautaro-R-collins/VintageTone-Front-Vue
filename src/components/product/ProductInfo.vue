@@ -44,13 +44,28 @@ const buyNow = () => {
                 {{ product.name }}
             </h1>
             <div class="flex items-center gap-4">
-                <span class="text-3xl font-black text-slate-900">${{ typeof product.price === 'number' ? product.price.toLocaleString() : product.price }}</span>
-                <span v-if="product.stock > 0" class="badge bg-emerald-50 text-emerald-600 border-none font-bold p-3">
-                    En Stock ({{ product.stock }})
-                </span>
-                <span v-else class="badge bg-red-50 text-red-600 border-none font-bold p-3">
-                    Sin Stock
-                </span>
+                <div class="flex flex-col">
+                    <span v-if="product.discount > 0" class="text-sm font-bold text-slate-400 line-through decoration-red-500/50">
+                        ${{ (typeof product.price === 'number' ? product.price : parseFloat(String(product.price).replace(/,/g, ''))).toLocaleString() }}
+                    </span>
+                    <span class="text-4xl font-black text-slate-900">
+                        ${{ (
+                            (typeof product.price === 'number' ? product.price : parseFloat(String(product.price).replace(/,/g, ''))) * 
+                            (1 - (product.discount || 0) / 100)
+                        ).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) }}
+                    </span>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <span v-if="product.discount > 0" class="badge bg-red-50 text-red-600 border-none font-black px-3 py-1 text-[10px] uppercase tracking-widest">
+                        ¡Ahorra {{ product.discount }}%!
+                    </span>
+                    <span v-if="product.stock > 0" class="badge bg-emerald-50 text-emerald-600 border-none font-bold p-3">
+                        En Stock ({{ product.stock }})
+                    </span>
+                    <span v-else class="badge bg-red-50 text-red-600 border-none font-bold p-3">
+                        Sin Stock
+                    </span>
+                </div>
             </div>
         </div>
 
