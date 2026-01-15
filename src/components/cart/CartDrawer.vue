@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router'
 
 const cartStore = useCartStore()
 const router = useRouter()
-const { items, isDrawerOpen, totalPrice, totalItems } = storeToRefs(cartStore)
+const { items, isDrawerOpen, totalPrice, totalSavings, totalItems } = storeToRefs(cartStore)
 
 const goToCheckout = () => {
     cartStore.toggleDrawer()
@@ -116,8 +116,15 @@ const formatPrice = (price) => {
                                     </button>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-base font-black text-slate-950 italic">
+                                    <p v-if="item.discount > 0" class="text-[10px] font-bold text-slate-400 line-through decoration-red-500/50 mb-0.5">
                                         {{ formatPrice((typeof item.price === 'number' ? item.price : parseFloat(String(item.price).replace(/,/g, ''))) * item.quantity) }}
+                                    </p>
+                                    <p class="text-base font-black text-slate-950 italic">
+                                        {{ formatPrice(
+                                            (typeof item.price === 'number' ? item.price : parseFloat(String(item.price).replace(/,/g, ''))) * 
+                                            (1 - (item.discount || 0) / 100) * 
+                                            item.quantity
+                                        ) }}
                                     </p>
                                 </div>
                             </div>
@@ -128,16 +135,16 @@ const formatPrice = (price) => {
 
             <!-- Footer -->
             <div v-if="items.length > 0" class="p-8 border-t border-slate-100 space-y-6 bg-slate-50/50">
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between text-slate-400 font-bold text-[10px] uppercase tracking-widest">
-                        <span>Subtotal</span>
-                        <span>{{ formatPrice(totalPrice) }}</span>
-                    </div>
+                <div class="space-y-4">
                     <div class="flex items-center justify-between text-slate-400 font-bold text-[10px] uppercase tracking-widest">
                         <span>Envío</span>
                         <span class="text-emerald-500">Gratis</span>
                     </div>
-                    <div class="pt-4 flex items-center justify-between">
+                    <div v-if="totalSavings > 0" class="flex items-center justify-between bg-emerald-50 text-emerald-600 font-black text-[10px] uppercase tracking-widest px-4 py-2 rounded-xl mt-2 animate-pulse">
+                        <span>Ahorro Total</span>
+                        <span>- {{ formatPrice(totalSavings) }}</span>
+                    </div>
+                    <div class="pt-4 flex items-center justify-between border-t border-slate-100 mt-4">
                         <span class="text-xl font-black text-slate-950 uppercase italic tracking-tighter">Total</span>
                         <span class="text-2xl font-black text-slate-950 italic">{{ formatPrice(totalPrice) }}</span>
                     </div>
