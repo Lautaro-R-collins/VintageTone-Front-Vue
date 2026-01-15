@@ -133,14 +133,40 @@ const currentCategory = computed(() => {
 })
 
 const fetchProducts = () => {
-    const catMap = {
-        'instrumentos': 'Guitarras', // Adjusting to likely backend categories
-        'amplificadores': 'Amplificadores',
-        'efectos': 'Pedales',
-        'accesorios': 'Accesorios'
+    const slugToName = (slug) => {
+        if (!slug) return null
+        const mapping = {
+            'instrumentos': 'Instrumentos',
+            'amplificadores': 'Amplificadores',
+            'efectos': 'Efectos',
+            'accesorios': 'Accesorios',
+            'outlet': 'Outlet',
+            'guitarras-electricas': 'Guitarras Eléctricas',
+            'bajos': 'Bajos',
+            'acusticos': 'Acústicos',
+            'tubulares': 'Tubulares',
+            'transistores': 'Transistores',
+            'overdrive': 'Overdrive',
+            'distorsion': 'Distorsión',
+            'delay': 'Delay',
+            'puas': 'Púas',
+            'correas': 'Correas',
+            'soportes': 'Soportes',
+            'estuches': 'Estuches'
+        }
+        return mapping[slug.toLowerCase()] || slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
     }
-    const category = catMap[categorySlug.value?.toLowerCase()] || categorySlug.value
-    productStore.fetchProducts({ category })
+
+    const params = {}
+    if (categorySlug.value) {
+        params.category = slugToName(categorySlug.value)
+    }
+    // Only send subcategory if it's not the same as category (e.g. /category/instrumentos/bajos)
+    if (subcategorySlug.value && subcategorySlug.value !== categorySlug.value) {
+        params.subcategory = slugToName(subcategorySlug.value)
+    }
+
+    productStore.fetchProducts(params)
 }
 
 onMounted(fetchProducts)
