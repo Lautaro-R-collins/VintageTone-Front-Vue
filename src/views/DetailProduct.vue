@@ -1,7 +1,7 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { mockProducts } from '../mocks/products'
+import { useProductStore } from '../stores/product'
 import Breadcrumbs from '../components/common/Breadcrumbs.vue'
 import ProductGallery from '../components/product/ProductGallery.vue'
 import ProductInfo from '../components/product/ProductInfo.vue'
@@ -14,24 +14,38 @@ const props = defineProps({
     }
 })
 
-const product = computed(() => {
-    return mockProducts.find(p => p.id === parseInt(props.id))
-})
+const route = useRoute()
+const productStore = useProductStore()
+
+const loadProduct = async () => {
+    await productStore.fetchProductById(props.id)
+    if (productStore.currentProduct) {
+        // Fetch related products (same category)
+        productStore.fetchProducts({ category: productStore.currentProduct.category })
+    }
+}
+
+onMounted(loadProduct)
+
+// Watch ID change (if navigating between related products)
+watch(() => props.id, loadProduct)
+
+const product = computed(() => productStore.currentProduct)
 
 // Related products (same category, different id)
 const relatedProducts = computed(() => {
-    return mockProducts
-        .filter(p => p.category === product.value?.category && p.id !== product.value?.id)
+    return productStore.products
+        .filter(p => p.category === product.value?.category && (p._id || p.id) != props.id)
         .slice(0, 4)
 })
 
 const productImages = computed(() => {
-    // For demo, if product only has one image, we'll repeat it or use placeholders
+    if (product.value?.images?.length > 0) {
+        return product.value.images
+    }
+    // Fallback if no images
     return [
-        product.value?.image,
-        'https://images.unsplash.com/photo-1550985616-10810253b84d?q=80&w=2000&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1549536830-67215fc46cf7?q=80&w=2000&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2000&auto=format&fit=crop'
+        product.value?.image || 'https://images.unsplash.com/photo-1550985616-10810253b84d?q=80&w=2000&auto=format&fit=crop'
     ]
 })
 </script>
@@ -58,7 +72,7 @@ const productImages = computed(() => {
                 </div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <CardProduct v-for="relProduct in relatedProducts" :key="relProduct.id" :product="relProduct" />
+                    <CardProduct v-for="relProduct in relatedProducts" :key="relProduct._id || relProduct.id" :product="relProduct" />
                 </div>
             </section>
         </main>

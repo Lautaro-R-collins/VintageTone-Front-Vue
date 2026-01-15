@@ -1,13 +1,14 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { mockProducts } from '../mocks/products'
+import { useProductStore } from '../stores/product'
 import CategoryHeader from '../components/category/CategoryHeader.vue'
 import CardProduct from '../components/product/CardProduct.vue'
 import Breadcrumbs from '../components/common/Breadcrumbs.vue'
 import Pagination from '../components/ui/Pagination.vue'
 
 const route = useRoute()
+const productStore = useProductStore()
 
 // State
 const currentPage = ref(1)
@@ -124,7 +125,6 @@ const currentCategory = computed(() => {
         return { title: catSlug || 'Categoría', subtitle: '', image: '' }
     }
 
-    // If there's a subcategory, use its info
     if (subSlug && category.subcategories && category.subcategories[subSlug]) {
         return category.subcategories[subSlug]
     }
@@ -132,29 +132,20 @@ const currentCategory = computed(() => {
     return category
 })
 
-const filteredProducts = computed(() => {
-    let products = mockProducts
-
-    // Filter by main category
-    if (categorySlug.value) {
-        // Map slug to category name in mock data
-        const catMap = {
-            'instrumentos': 'Instrumentos',
-            'amplificadores': 'Amplificadores',
-            'efectos': 'Pedales', // Mock data uses "Pedales" instead of "Efectos"
-            'accesorios': 'Accesorios'
-        }
-        const targetCat = catMap[categorySlug.value.toLowerCase()] || categorySlug.value
-        products = products.filter(p => p.category.toLowerCase() === targetCat.toLowerCase())
+const fetchProducts = () => {
+    const catMap = {
+        'instrumentos': 'Guitarras', // Adjusting to likely backend categories
+        'amplificadores': 'Amplificadores',
+        'efectos': 'Pedales',
+        'accesorios': 'Accesorios'
     }
+    const category = catMap[categorySlug.value?.toLowerCase()] || categorySlug.value
+    productStore.fetchProducts({ category })
+}
 
-    // Filter by subcategory if exists (logic can be expanded when data supports it)
-    if (subcategorySlug.value) {
-        // Placeholder for subcategory filter
-    }
+onMounted(fetchProducts)
 
-    return products
-})
+const filteredProducts = computed(() => productStore.products)
 
 // Pagination
 const totalPages = computed(() => Math.ceil(filteredProducts.value.length / itemsPerPage))
@@ -168,6 +159,7 @@ const paginatedProducts = computed(() => {
 // Reset page when category changes
 watch([categorySlug, subcategorySlug], () => {
     currentPage.value = 1
+    fetchProducts()
 })
 
 // Scroll to top when page changes
@@ -194,7 +186,7 @@ watch(currentPage, () => {
 
             <!-- Products Grid -->
             <div v-if="paginatedProducts.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <CardProduct v-for="product in paginatedProducts" :key="product.id" :product="product" />
+                <CardProduct v-for="product in paginatedProducts" :key="product._id || product.id" :product="product" />
             </div>
 
             <!-- Empty State -->

@@ -1,14 +1,21 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps({
     images: {
         type: Array,
-        required: true
+        required: true,
+        default: () => []
     }
 })
 
-const activeImage = ref(props.images[0])
+const activeImage = ref(props.images[0] || '')
+
+watch(() => props.images, (newImages) => {
+    if (newImages && newImages.length > 0) {
+        activeImage.value = newImages[0]
+    }
+}, { immediate: true })
 </script>
 
 <template>
