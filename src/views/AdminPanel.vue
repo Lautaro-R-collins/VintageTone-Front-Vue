@@ -280,7 +280,7 @@ const onCategoryChange = () => {
             <X :size="24" />
           </button>
         </div>
-
+        <!-- componetizar este formulario -->
         <form @submit.prevent="handleSubmit" class="p-8 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-2 lg:col-span-2">
