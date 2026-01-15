@@ -35,6 +35,7 @@ const form = ref({
   description: '',
   price: 0,
   category: '',
+  subcategory: '',
   stock: 0,
   brand: 'Genérico'
 })
@@ -64,6 +65,7 @@ const openModal = (product = null) => {
       description: product.description,
       price: product.price,
       category: product.category,
+      subcategory: product.subcategory || '',
       stock: product.stock,
       brand: product.brand || 'Genérico'
     }
@@ -75,6 +77,7 @@ const openModal = (product = null) => {
       description: '',
       price: 0,
       category: '',
+      subcategory: '',
       stock: 0,
       brand: 'Genérico'
     }
@@ -91,8 +94,9 @@ const handleSubmit = async () => {
   isLoading.value = true
   const formData = new FormData()
   
-  // Append basic fields
+  // Append basic fields (skip empty subcategory)
   Object.keys(form.value).forEach(key => {
+    if (key === 'subcategory' && !form.value[key]) return
     formData.append(key, form.value[key])
   })
 
@@ -135,6 +139,22 @@ const deleteProduct = async (id) => {
 
 const goBack = () => {
   router.push('/profile')
+}
+
+const categoryMap = {
+  'Instrumentos': ['Guitarras Eléctricas', 'Bajos', 'Acústicos'],
+  'Amplificadores': ['Tubulares', 'Transistores'],
+  'Efectos': ['Overdrive', 'Distorsión', 'Delay'],
+  'Accesorios': ['Púas', 'Correas', 'Soportes', 'Estuches'],
+  'Outlet': []
+}
+
+const subcategories = computed(() => {
+  return categoryMap[form.value.category] || []
+})
+
+const onCategoryChange = () => {
+  form.value.subcategory = ''
 }
 </script>
 
@@ -222,7 +242,14 @@ const goBack = () => {
                       </div>
                     </td>
                     <td class="px-8 py-4">
-                      <span class="text-xs font-bold text-slate-500 uppercase tracking-widest bg-slate-100 px-3 py-1 rounded-full">{{ product.category }}</span>
+                      <div class="flex flex-col gap-1">
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest bg-slate-100 px-3 py-1 rounded-full w-fit">
+                          {{ product.category }}
+                        </span>
+                        <span v-if="product.subcategory" class="text-[9px] font-bold text-amber-600 uppercase tracking-widest px-3">
+                          {{ product.subcategory }} 
+                        </span>
+                      </div>
                     </td>
                     <td class="px-8 py-4 text-right">
                       <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -274,12 +301,20 @@ const goBack = () => {
             </div>
             <div class="space-y-2">
               <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Categoría</label>
-              <select v-model="form.category" required class="w-full bg-slate-50 border border-slate-100 px-6 py-4 rounded-2xl text-sm font-bold focus:border-amber-500 outline-none transition-colors appearance-none">
-                <option value="Guitarras">Guitarras</option>
-                <option value="Bajos">Bajos</option>
+              <select v-model="form.category" @change="onCategoryChange" required class="w-full bg-slate-50 border border-slate-100 px-6 py-4 rounded-2xl text-sm font-bold focus:border-amber-500 outline-none transition-colors appearance-none">
+                <option value="" disabled>Seleccionar Categoría</option>
+                <option value="Instrumentos">Instrumentos</option>
                 <option value="Amplificadores">Amplificadores</option>
-                <option value="Pedales">Pedales</option>
+                <option value="Efectos">Efectos</option>
                 <option value="Accesorios">Accesorios</option>
+                <option value="Outlet">Outlet</option>
+              </select>
+            </div>
+            <div class="space-y-2">
+              <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Subcategoría</label>
+              <select v-model="form.subcategory" :disabled="!form.category || subcategories.length === 0" class="w-full bg-slate-50 border border-slate-100 px-6 py-4 rounded-2xl text-sm font-bold focus:border-amber-500 outline-none transition-colors appearance-none disabled:opacity-50">
+                <option value="">Ninguna / Ver Todos</option>
+                <option v-for="sub in subcategories" :key="sub" :value="sub">{{ sub }}</option>
               </select>
             </div>
             <div class="space-y-2">
