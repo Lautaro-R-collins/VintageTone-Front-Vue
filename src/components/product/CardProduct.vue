@@ -41,6 +41,13 @@ const addToCart = (e) => {
         <!-- Dark Overlay for better contrast -->
         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500"></div>
 
+        <!-- Discount Badge -->
+        <div v-if="product.discount > 0" class="absolute top-6 left-6 z-20">
+            <div class="bg-red-500 text-white font-black text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-xl animate-pulse">
+                -{{ product.discount }}% Off
+            </div>
+        </div>
+
         <!-- Card Actions -->
         <div
             class="absolute top-6 right-6 flex flex-col gap-3 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-500">
@@ -64,9 +71,17 @@ const addToCart = (e) => {
             <h3 class="text-2xl font-black text-white uppercase leading-tight drop-shadow-lg">
                 {{ product.name }}
             </h3>
-            <p class="text-white font-bold text-lg drop-shadow-md">
-                ${{ typeof product.price === 'number' ? product.price.toLocaleString() : product.price }}
-            </p>
+            <div class="flex items-center gap-3">
+                <p v-if="product.discount > 0" class="text-slate-400 font-bold text-sm line-through decoration-red-500/50">
+                    ${{ (typeof product.price === 'number' ? product.price : parseFloat(String(product.price).replace(/,/g, ''))).toLocaleString() }}
+                </p>
+                <p class="text-white font-bold text-lg drop-shadow-md">
+                    ${{ (
+                        (typeof product.price === 'number' ? product.price : parseFloat(String(product.price).replace(/,/g, ''))) * 
+                        (1 - (product.discount || 0) / 100)
+                    ).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) }}
+                </p>
+            </div>
             <button
                 class="text-xs font-bold text-slate-300 group-hover:text-amber-500 transition-colors uppercase tracking-widest flex items-center gap-2">
                 Ver detalles
