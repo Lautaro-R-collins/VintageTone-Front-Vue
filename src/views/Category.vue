@@ -159,9 +159,13 @@ const fetchProducts = () => {
 
     const params = {}
     if (categorySlug.value) {
-        params.category = slugToName(categorySlug.value)
+        const catName = slugToName(categorySlug.value)
+        if (catName === 'Outlet') {
+        } else {
+            params.category = catName
+        }
     }
-    // Only send subcategory if it's not the same as category (e.g. /category/instrumentos/bajos)
+
     if (subcategorySlug.value && subcategorySlug.value !== categorySlug.value) {
         params.subcategory = slugToName(subcategorySlug.value)
     }
@@ -171,7 +175,13 @@ const fetchProducts = () => {
 
 onMounted(fetchProducts)
 
-const filteredProducts = computed(() => productStore.products)
+const filteredProducts = computed(() => {
+    const products = productStore.products
+    if (categorySlug.value?.toLowerCase() === 'outlet') {
+        return products.filter(p => p.category === 'Outlet' || (p.discount && p.discount > 0))
+    }
+    return products
+})
 
 // Pagination
 const totalPages = computed(() => Math.ceil(filteredProducts.value.length / itemsPerPage))
