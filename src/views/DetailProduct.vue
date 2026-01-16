@@ -6,6 +6,8 @@ import Breadcrumbs from '../components/common/Breadcrumbs.vue'
 import ProductGallery from '../components/product/ProductGallery.vue'
 import ProductInfo from '../components/product/ProductInfo.vue'
 import CardProduct from '../components/product/CardProduct.vue'
+import ReviewsProducts from '../components/reviews/ReviewsProducts.vue'
+
 
 const props = defineProps({
     id: {
@@ -62,6 +64,9 @@ const productImages = computed(() => {
                 <!-- Info Section -->
                 <ProductInfo :product="product" />
             </div>
+            
+            <!-- Reviews Section -->
+            <ReviewsProducts :product-id="product._id || product.id" />
 
             <!-- Related Products Section -->
             <section class="mt-32">
