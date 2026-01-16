@@ -1,3 +1,5 @@
+import headerEfectos from '../assets/img/header_efectos.png'
+
 export const mockBlogPosts = [
     {
         id: 1,
@@ -6,7 +8,7 @@ export const mockBlogPosts = [
         date: "15 May 2026",
         author: "Lauta Collins",
         summary: "Descubre por qué los instrumentos antiguos tienen un sonido que los modernos no pueden replicar.",
-        image: "/assets/home/HeaderImg.webp",
+        image: "https://www.gibson.com/cdn/shop/files/HERO_desktop__Gibson-DTCJB20BB-1800x1200.jpg?v=1766508063",
         category: "Equipamiento",
         content: `
             <p>Las guitarras vintage no son simplemente instrumentos viejos; son cápsulas de tiempo que capturan la esencia de una era dorada de la fabricación. Pero, ¿qué es exactamente lo que hace que una Stratocaster de 1964 suene tan diferente a una reproducción moderna?</p>
@@ -48,7 +50,7 @@ export const mockBlogPosts = [
         date: "01 Jun 2026",
         author: "Martín García",
         summary: "Analizamos el eterno debate entre la calidez de lo analógico y la versatilidad de lo digital.",
-        image: "https://images.unsplash.com/photo-1514778393520-09947ad456bf?q=80&w=2070&auto=format&fit=crop",
+        image: headerEfectos,
         category: "Debates",
         content: `
             <p>El mundo del pedal ha evolucionado drásticamente. Lo que antes era una elección binaria entre un TS808 y nada, hoy es un ecosistema complejo de DSPs y circuitos discretos.</p>
