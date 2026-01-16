@@ -10,6 +10,7 @@ export const useReviewStore = defineStore('review', () => {
     async function fetchReviews(productId) {
         isLoading.value = true
         error.value = null
+        reviews.value = [] // Clear old reviews
         try {
             const response = await api.get(`/reviews/${productId}`)
             reviews.value = response.data
