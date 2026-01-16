@@ -32,7 +32,8 @@ const breadcrumbs = computed(() => {
             'favorites': 'Favoritos',
             'about': 'Nosotros',
             'contact': 'Contacto',
-            'outlet': 'Outlet'
+            'outlet': 'Outlet',
+            'search': 'Búsqueda'
         }
 
         if (mappings[path.toLowerCase()]) {
