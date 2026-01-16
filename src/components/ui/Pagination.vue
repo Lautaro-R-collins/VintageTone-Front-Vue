@@ -32,7 +32,7 @@ const setPage = (page) => {
                 class="btn btn-sm md:btn-md border-none rounded-lg transition-all duration-300 font-bold cursor-pointer"
                 :class="[
                     currentPage === page
-                        ? 'bg-slate-950 text-white shadow-lg'
+                        ? 'bg-amber-500 text-white shadow-lg'
                         : 'bg-slate-900 hover:bg-slate-950 text-white'
                 ]" @click="emit('update:currentPage', page)">
                 {{ page }}
