@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useAuthStore } from '../../stores/auth'
 import { useReviewStore } from '../../stores/review'
 import { Star, MessageSquare, Send, Calendar } from 'lucide-vue-next'
@@ -59,8 +59,19 @@ const submitReview = async () => {
     isSubmitting.value = false
 }
 
+// Watch for product changes to fetch new reviews
+watch(() => props.productId, (newId) => {
+    if (newId) {
+        submissionSuccess.value = false
+        submissionError.value = ''
+        comment.value = ''
+        rating.value = 5
+        reviewStore.fetchReviews(newId)
+    }
+}, { immediate: true })
+
 onMounted(() => {
-    reviewStore.fetchReviews(props.productId)
+    // Already handled by immediate: true in watch
 })
 </script>
 
