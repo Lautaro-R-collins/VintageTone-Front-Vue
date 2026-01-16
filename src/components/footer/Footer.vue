@@ -4,15 +4,15 @@ import { Mail, MapPin, Phone, Instagram, Youtube, Linkedin } from 'lucide-vue-ne
 const socials = [
     {
         icon: Instagram,
-        link: 'https://www.instagram.com/vintagetone/'
+        link: 'https://www.instagram.com'
     },
     {
         icon: Youtube,
-        link: 'https://www.youtube.com/vintagetone'
+        link: 'https://www.youtube.com'
     },
     {
         icon: Linkedin,
-        link: 'https://www.linkedin.com/vintagetone'
+        link: 'https://www.linkedin.com'
     }
 ]
 </script>
