@@ -28,7 +28,7 @@ defineProps({
         </div>
 
         <!-- Content -->
-        <div class="p-8 flex flex-col flex-grow space-y-4">
+        <div class="p-8 flex flex-col grow space-y-4">
             <!-- Meta -->
             <div class="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                 <div class="flex items-center gap-1.5">
@@ -47,7 +47,7 @@ defineProps({
             </h3>
 
             <!-- Summary -->
-            <p class="text-sm text-slate-600 font-medium leading-relaxed flex-grow">
+            <p class="text-sm flex text-slate-600 font-medium leading-relaxed grow">
                 {{ post.summary }}
             </p>
 

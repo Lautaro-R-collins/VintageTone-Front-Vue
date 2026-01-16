@@ -229,18 +229,24 @@ const closeModal = () => {
             </div>
 
             <!-- Summary -->
-            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-4">
-                <div class="flex justify-between items-center text-slate-500 text-xs font-bold uppercase tracking-widest">
-                    <span>Subtotal</span>
-                    <span>{{ formatPrice(cartStore.totalPrice) }}</span>
-                </div>
-                <div class="flex justify-between items-center text-slate-500 text-xs font-bold uppercase tracking-widest">
-                    <span>Envío</span>
-                    <span class="text-emerald-500">Gratis</span>
+            <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 space-y-4">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+                        <span>Subtotal</span>
+                        <span class="text-slate-900">{{ formatPrice(cartStore.subtotalPrice) }}</span>
+                    </div>
+                    <div v-if="cartStore.totalSavings > 0" class="flex justify-between items-center bg-emerald-50 text-emerald-600 font-black text-[10px] uppercase tracking-widest px-4 py-2 rounded-xl">
+                        <span>Tu Ahorro</span>
+                        <span>- {{ formatPrice(cartStore.totalSavings) }}</span>
+                    </div>
+                    <div class="flex justify-between items-center text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+                        <span>Envío</span>
+                        <span class="text-emerald-500 italic">Gratis</span>
+                    </div>
                 </div>
                 <div class="h-px bg-slate-200"></div>
-                <div class="flex justify-between items-center">
-                    <span class="text-xl font-black text-slate-950 uppercase italic tracking-tighter">Total</span>
+                <div class="flex justify-between items-center pt-2">
+                    <span class="text-xl font-black text-slate-950 uppercase italic tracking-tighter">Total Final</span>
                     <span class="text-3xl font-black text-slate-950 italic">{{ formatPrice(cartStore.totalPrice) }}</span>
                 </div>
             </div>

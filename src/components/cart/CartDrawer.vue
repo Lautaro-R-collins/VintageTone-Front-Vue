@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router'
 
 const cartStore = useCartStore()
 const router = useRouter()
-const { items, isDrawerOpen, totalPrice, totalItems } = storeToRefs(cartStore)
+const { items, isDrawerOpen, totalPrice, totalSavings, totalItems } = storeToRefs(cartStore)
 
 const goToCheckout = () => {
     cartStore.toggleDrawer()
@@ -84,10 +84,10 @@ const formatPrice = (price) => {
                 </div>
 
                 <div v-else class="space-y-8">
-                    <div v-for="item in items" :key="item.id" class="flex gap-6 group">
+                    <div v-for="item in items" :key="item._id || item.id" class="flex gap-6 group">
                         <!-- Item Image -->
                         <div class="w-24 h-32 bg-slate-100 rounded-2xl overflow-hidden relative shrink-0 border border-slate-100">
-                            <img :src="item.image" :alt="item.name" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                            <img :src="item.images?.length > 0 ? item.images[0] : item.image" :alt="item.name" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         </div>
 
                         <!-- Item Info -->
@@ -97,7 +97,7 @@ const formatPrice = (price) => {
                                     <h4 class="text-sm font-black text-slate-950 uppercase italic tracking-tight pr-4">
                                         {{ item.name }}
                                     </h4>
-                                    <button @click="cartStore.removeItem(item.id)" class="text-slate-300 hover:text-red-500 transition-colors cursor-pointer">
+                                    <button @click="cartStore.removeItem(item._id || item.id)" class="text-slate-300 hover:text-red-500 transition-colors cursor-pointer">
                                         <Trash2 :size="16" />
                                     </button>
                                 </div>
@@ -111,13 +111,20 @@ const formatPrice = (price) => {
                                         <Minus :size="12" />
                                     </button>
                                     <span class="w-8 text-center text-xs font-black italic">{{ item.quantity }}</span>
-                                    <button @click="cartStore.addItem(item, 1)" :disabled="item.quantity >= item.stock" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-all text-slate-400 hover:text-slate-950 disabled:opacity-30 cursor-pointer">
+                                    <button @click="cartStore.addItem(item, 1)" :disabled="item.quantity >= (item.stock || 0)" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-all text-slate-400 hover:text-slate-950 disabled:opacity-30 cursor-pointer">
                                         <Plus :size="12" />
                                     </button>
                                 </div>
                                 <div class="text-right">
+                                    <p v-if="item.discount > 0" class="text-[10px] font-bold text-slate-400 line-through decoration-red-500/50 mb-0.5">
+                                        {{ formatPrice((typeof item.price === 'number' ? item.price : parseFloat(String(item.price).replace(/,/g, ''))) * item.quantity) }}
+                                    </p>
                                     <p class="text-base font-black text-slate-950 italic">
-                                        ${{ (item.price.replace(/,/g, '') * item.quantity).toLocaleString() }}
+                                        {{ formatPrice(
+                                            (typeof item.price === 'number' ? item.price : parseFloat(String(item.price).replace(/,/g, ''))) * 
+                                            (1 - (item.discount || 0) / 100) * 
+                                            item.quantity
+                                        ) }}
                                     </p>
                                 </div>
                             </div>
@@ -128,16 +135,16 @@ const formatPrice = (price) => {
 
             <!-- Footer -->
             <div v-if="items.length > 0" class="p-8 border-t border-slate-100 space-y-6 bg-slate-50/50">
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between text-slate-400 font-bold text-[10px] uppercase tracking-widest">
-                        <span>Subtotal</span>
-                        <span>{{ formatPrice(totalPrice) }}</span>
-                    </div>
+                <div class="space-y-4">
                     <div class="flex items-center justify-between text-slate-400 font-bold text-[10px] uppercase tracking-widest">
                         <span>Envío</span>
                         <span class="text-emerald-500">Gratis</span>
                     </div>
-                    <div class="pt-4 flex items-center justify-between">
+                    <div v-if="totalSavings > 0" class="flex items-center justify-between bg-emerald-50 text-emerald-600 font-black text-[10px] uppercase tracking-widest px-4 py-2 rounded-xl mt-2 animate-pulse">
+                        <span>Ahorro Total</span>
+                        <span>- {{ formatPrice(totalSavings) }}</span>
+                    </div>
+                    <div class="pt-4 flex items-center justify-between border-t border-slate-100 mt-4">
                         <span class="text-xl font-black text-slate-950 uppercase italic tracking-tighter">Total</span>
                         <span class="text-2xl font-black text-slate-950 italic">{{ formatPrice(totalPrice) }}</span>
                     </div>

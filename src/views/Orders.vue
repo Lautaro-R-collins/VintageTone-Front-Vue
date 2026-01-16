@@ -57,7 +57,7 @@ const handleRemove = (productId) => {
             <div class="space-y-4">
               <OrderItem 
                 v-for="item in cartStore.items" 
-                :key="item.id" 
+                :key="item._id || item.id" 
                 :item="item"
                 @remove="handleRemove"
               />

@@ -1,46 +1,55 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { mockProducts } from '../../mocks/products'
+import { useProductStore } from '../../stores/product'
 
 const route = useRoute()
+const productStore = useProductStore()
 
 const breadcrumbs = computed(() => {
     const pathArray = route.path.split('/').filter((p) => p !== '')
-    
     const crumbs = []
     let currentPath = ''
 
-    pathArray.forEach((path) => {
+    pathArray.forEach((path, index) => {
         currentPath += `/${path}`
         
         // Skip 'category' from being displayed
         if (path.toLowerCase() === 'category') return
         
-        // Check if path is an ID (numeric)
-        const isId = !isNaN(path) && !isNaN(parseFloat(path))
         let name = path.charAt(0).toUpperCase() + path.slice(1).replace(/-/g, ' ')
 
-        if (isId) {
-            const product = mockProducts.find(p => p.id === parseInt(path))
-            if (product) {
-                name = product.name
-            }
+        // If we are in /product/:id, replace :id with product name
+        if (pathArray[index - 1] === 'product' && productStore.currentProduct) {
+            name = productStore.currentProduct.name
+        }
+        
+        // Specific mapping for common paths
+        const mappings = {
+            'product': 'Producto',
+            'checkout': 'Finalizar Compra',
+            'profile': 'Mi Perfil',
+            'favorites': 'Favoritos',
+            'about': 'Nosotros',
+            'contact': 'Contacto',
+            'outlet': 'Outlet'
+        }
+
+        if (mappings[path.toLowerCase()]) {
+            name = mappings[path.toLowerCase()]
         }
         
         crumbs.push({
             name,
             to: currentPath,
-            current: false // Will be updated in logic if needed, but easier to check against full path or index in original
+            current: false
         })
     })
 
-    // Correctly set current for the last item displayed
     if (crumbs.length > 0) {
         crumbs[crumbs.length - 1].current = true
     }
 
-    // Add Home to the beginning
     return [
         { name: 'Inicio', to: '/', current: route.path === '/' },
         ...crumbs

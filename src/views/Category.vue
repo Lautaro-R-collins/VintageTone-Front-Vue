@@ -7,6 +7,15 @@ import CardProduct from '../components/product/CardProduct.vue'
 import Breadcrumbs from '../components/common/Breadcrumbs.vue'
 import Pagination from '../components/ui/Pagination.vue'
 
+// Images
+import headerInstrumentos from '../assets/img/header_instrumentos.png'
+import headerGuitarras from '../assets/img/header_guitarras.png'
+import headerBajos from '../assets/img/header_bajos.png'
+import headerAcusticos from '../assets/img/header_acusticos.png'
+import headerAmplificadores from '../assets/img/header_amplificadores.png'
+import headerEfectos from '../assets/img/header_efectos.png'
+
+
 const route = useRoute()
 const productStore = useProductStore()
 
@@ -19,29 +28,29 @@ const categoryInfo = {
     'instrumentos': {
         title: 'Instrumentos',
         subtitle: 'Tesoros con historia',
-        image: 'https://images.unsplash.com/photo-1550291652-6ea9114a47b1?q=80&w=2000&auto=format&fit=crop',
+        image: headerInstrumentos,
         subcategories: {
             'guitarras-electricas': {
                 title: 'Guitarras Eléctricas',
                 subtitle: 'El alma del rock',
-                image: 'https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?q=80&w=2000&auto=format&fit=crop'
+                image: headerGuitarras
             },
             'bajos': {
                 title: 'Bajos',
                 subtitle: 'El groove vintage',
-                image: 'https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?q=80&w=2000&auto=format&fit=crop'
+                image: headerBajos
             },
             'acusticos': {
                 title: 'Acústicos',
                 subtitle: 'Resonancia natural',
-                image: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=2000&auto=format&fit=crop'
+                image: headerAcusticos
             }
         }
     },
     'amplificadores': {
         title: 'Amplificadores',
         subtitle: 'El tono del pasado',
-        image: 'https://images.unsplash.com/photo-1598124838183-9978f24f5ec0?q=80&w=2000&auto=format&fit=crop',
+        image: headerAmplificadores,
         subcategories: {
             'tubulares': {
                 title: 'Tubulares',
@@ -58,7 +67,7 @@ const categoryInfo = {
     'efectos': {
         title: 'Efectos',
         subtitle: 'Texturas sonoras',
-        image: 'https://images.unsplash.com/photo-1549536830-67215fc46cf7?q=80&w=2000&auto=format&fit=crop',
+        image: headerEfectos,
         subcategories: {
             'overdrive': {
                 title: 'Overdrive',
@@ -107,7 +116,7 @@ const categoryInfo = {
     'outlet': {
         title: 'Outlet',
         subtitle: 'Grandes oportunidades',
-        image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2000&auto=format&fit=crop'
+        image: 'https://www.gibson.com/cdn/shop/files/HERO_desktop__Gibson-DTCJB20BB-1800x1200.jpg?v=1766508063'
     }
 }
 
@@ -133,19 +142,55 @@ const currentCategory = computed(() => {
 })
 
 const fetchProducts = () => {
-    const catMap = {
-        'instrumentos': 'Guitarras', // Adjusting to likely backend categories
-        'amplificadores': 'Amplificadores',
-        'efectos': 'Pedales',
-        'accesorios': 'Accesorios'
+    const slugToName = (slug) => {
+        if (!slug) return null
+        const mapping = {
+            'instrumentos': 'Instrumentos',
+            'amplificadores': 'Amplificadores',
+            'efectos': 'Efectos',
+            'accesorios': 'Accesorios',
+            'outlet': 'Outlet',
+            'guitarras-electricas': 'Guitarras Eléctricas',
+            'bajos': 'Bajos',
+            'acusticos': 'Acústicos',
+            'tubulares': 'Tubulares',
+            'transistores': 'Transistores',
+            'overdrive': 'Overdrive',
+            'distorsion': 'Distorsión',
+            'delay': 'Delay',
+            'puas': 'Púas',
+            'correas': 'Correas',
+            'soportes': 'Soportes',
+            'estuches': 'Estuches'
+        }
+        return mapping[slug.toLowerCase()] || slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
     }
-    const category = catMap[categorySlug.value?.toLowerCase()] || categorySlug.value
-    productStore.fetchProducts({ category })
+
+    const params = {}
+    if (categorySlug.value) {
+        const catName = slugToName(categorySlug.value)
+        if (catName === 'Outlet') {
+        } else {
+            params.category = catName
+        }
+    }
+
+    if (subcategorySlug.value && subcategorySlug.value !== categorySlug.value) {
+        params.subcategory = slugToName(subcategorySlug.value)
+    }
+
+    productStore.fetchProducts(params)
 }
 
 onMounted(fetchProducts)
 
-const filteredProducts = computed(() => productStore.products)
+const filteredProducts = computed(() => {
+    const products = productStore.products
+    if (categorySlug.value?.toLowerCase() === 'outlet') {
+        return products.filter(p => p.category === 'Outlet' || (p.discount && p.discount > 0))
+    }
+    return products
+})
 
 // Pagination
 const totalPages = computed(() => Math.ceil(filteredProducts.value.length / itemsPerPage))

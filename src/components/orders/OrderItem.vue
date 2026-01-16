@@ -34,7 +34,7 @@ const handleRemove = () => {
     </button>
 
     <div class="w-20 h-20 rounded-xl bg-white overflow-hidden border border-slate-200 shrink-0">
-      <img :src="item.image" :alt="item.name" class="w-full h-full object-contain p-2" />
+      <img :src="item.images?.length > 0 ? item.images[0] : item.image" :alt="item.name" class="w-full h-full object-contain p-2" />
     </div>
     
     <div class="flex-1 pr-10">
@@ -49,7 +49,7 @@ const handleRemove = () => {
         </div>
         <div class="flex flex-col items-end">
           <p class="font-black text-slate-950 italic tracking-tighter text-xl">
-            {{ formatPrice(parseFloat(item.price.replace(/,/g, '')) * item.quantity) }}
+            {{ formatPrice((typeof item.price === 'number' ? item.price : parseFloat(String(item.price).replace(/,/g, ''))) * item.quantity) }}
           </p>
         </div>
       </div>
