@@ -87,6 +87,11 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
+        path: '/search',
+        name: 'SearchResults',
+        component: () => import('../views/SearchResultsPage.vue')
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: NotFound
