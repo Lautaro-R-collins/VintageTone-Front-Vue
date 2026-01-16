@@ -1,8 +1,10 @@
 <script setup>
-import { ShoppingBag, Heart } from 'lucide-vue-next'
+import { ShoppingBag, Heart, Search } from 'lucide-vue-next'
 import { useCartStore } from '../../stores/cart'
 import { useFavoritesStore } from '../../stores/favorites'
 import AuthButton from './AuthButton.vue'
+
+const emit = defineEmits(['toggleSearch'])
 
 const cartStore = useCartStore()
 const favoritesStore = useFavoritesStore()
@@ -10,6 +12,14 @@ const favoritesStore = useFavoritesStore()
 
 <template>
     <div class="flex items-center gap-2">
+        <!-- Search Trigger (Mobile Only) -->
+        <button 
+            @click="emit('toggleSearch')"
+            class="md:hidden cursor-pointer group p-1"
+        >
+            <Search :size="25" class="group-hover:scale-110 group-hover:text-amber-500 transition-all duration-300" />
+        </button>
+
         <router-link to="/favorites" class="cursor-pointer relative group">
             <Heart :size="25" class="group-hover:scale-110 group-hover:text-red-500 transition-all duration-300" />
             <!-- Badge -->
