@@ -7,6 +7,7 @@ export const useProductStore = defineStore('products', () => {
     const currentProduct = ref(null)
     const isLoading = ref(false)
     const error = ref(null)
+    const searchResults = ref([])
 
     async function fetchProducts(params = {}) {
         isLoading.value = true
@@ -17,6 +18,26 @@ export const useProductStore = defineStore('products', () => {
         } catch (err) {
             error.value = err.response?.data?.message || 'Error al cargar productos'
             console.error('Fetch products error:', err)
+        } finally {
+            isLoading.value = false
+        }
+    }
+
+    async function searchProductsAction(query) {
+        if (!query || query.trim() === '') {
+            searchResults.value = []
+            return
+        }
+        isLoading.value = true
+        error.value = null
+        try {
+            const { data } = await api.get('/products/search', { params: { query } })
+            searchResults.value = data
+            return data
+        } catch (err) {
+            error.value = err.response?.data?.message || 'Error en la búsqueda'
+            console.error('Search error:', err)
+            searchResults.value = []
         } finally {
             isLoading.value = false
         }
@@ -92,7 +113,9 @@ export const useProductStore = defineStore('products', () => {
         currentProduct,
         isLoading,
         error,
+        searchResults,
         fetchProducts,
+        searchProductsAction,
         fetchProductById,
         addProduct,
         updateProduct,
