@@ -53,7 +53,12 @@ const productImages = computed(() => {
 </script>
 
 <template>
-    <div v-if="product" class="bg-white min-h-screen pb-20">
+    <div v-if="productStore.isLoading" class="min-h-screen flex flex-col items-center justify-center bg-white space-y-6">
+        <span class="loading loading-ring loading-lg text-amber-500"></span>
+        <p class="text-slate-400 font-black uppercase italic tracking-[0.3em] text-xs animate-pulse">Cargando producto legendario...</p>
+    </div>
+
+    <div v-else-if="product" class="bg-white min-h-screen pb-20">
         <Breadcrumbs />
 
         <main class="max-w-7xl mx-auto px-6 py-12 md:py-20">
