@@ -3,6 +3,7 @@ import { computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProductStore } from '../stores/product'
 import CardProduct from '../components/product/CardProduct.vue'
+import ProductSkeleton from '../components/product/ProductSkeleton.vue'
 import Breadcrumbs from '../components/common/Breadcrumbs.vue'
 import { Search, SlidersHorizontal, PackageX, Sparkles } from 'lucide-vue-next'
 
@@ -47,9 +48,8 @@ const isLoading = computed(() => productStore.isLoading)
             </div>
 
             <!-- Content Area -->
-            <div v-if="isLoading" class="flex flex-col items-center justify-center py-40 space-y-6">
-                <span class="loading loading-ring loading-lg text-amber-500"></span>
-                <p class="text-slate-400 font-black uppercase italic tracking-[0.3em] text-xs animate-pulse">Analizando inventario...</p>
+            <div v-if="isLoading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <ProductSkeleton v-for="i in 8" :key="i" />
             </div>
 
             <div v-else-if="results.length > 0">
