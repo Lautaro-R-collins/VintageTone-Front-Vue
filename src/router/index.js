@@ -113,8 +113,6 @@ import { useAuthStore } from '../stores/auth'
 router.beforeEach(async (to, from, next) => {
     const authStore = useAuthStore()
 
-    // We should probably wait for checkAuth in App.vue to finish, 
-    // but for simple navigation, we check if it requires auth
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
         next('/login')
     } else if (to.meta.requiresAdmin && !authStore.user?.isAdmin) {
