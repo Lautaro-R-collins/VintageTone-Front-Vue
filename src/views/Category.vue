@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useProductStore } from '../stores/product'
 import CategoryHeader from '../components/category/CategoryHeader.vue'
 import CardProduct from '../components/product/CardProduct.vue'
+import ProductSkeleton from '../components/product/ProductSkeleton.vue'
 import Breadcrumbs from '../components/common/Breadcrumbs.vue'
 import Pagination from '../components/ui/Pagination.vue'
 
@@ -230,7 +231,11 @@ watch(currentPage, () => {
             </div>
 
             <!-- Products Grid -->
-            <div v-if="paginatedProducts.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div v-if="productStore.isLoading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <ProductSkeleton v-for="i in itemsPerPage" :key="i" />
+            </div>
+
+            <div v-else-if="paginatedProducts.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <CardProduct v-for="product in paginatedProducts" :key="product._id || product.id" :product="product" />
             </div>
 
