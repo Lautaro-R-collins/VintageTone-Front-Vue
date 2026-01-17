@@ -1,5 +1,20 @@
 <script setup>
-import { Mail, MapPin, Phone, Instagram, Youtube } from 'lucide-vue-next'
+import { Mail, MapPin, Phone, Instagram, Youtube, Linkedin } from 'lucide-vue-next'
+
+const socials = [
+  {
+    icon: Instagram,
+    link: 'https://www.instagram.com'
+  },
+  {
+    icon: Youtube,
+    link: 'https://www.youtube.com'
+  },
+  {
+    icon: Linkedin,
+    link: 'https://www.linkedin.com'
+  }
+]
 </script>
 
 <template>
@@ -8,11 +23,7 @@ import { Mail, MapPin, Phone, Instagram, Youtube } from 'lucide-vue-next'
       <div class="space-y-6 col-span-1 md:col-span-2">
         <div class="flex items-center">
           <router-link to="/" class="flex items-start cursor-pointer no-underline group">
-            <img 
-              src="/logoDesktop.png" 
-              alt="VintageTone" 
-              class="h-20 w-auto"
-            />
+            <img src="/logoDesktop.png" alt="VintageTone" class="h-20 w-auto" />
           </router-link>
         </div>
         <p class="max-w-xs text-xs leading-relaxed text-slate-800 font-medium uppercase tracking-wider">
@@ -55,16 +66,21 @@ import { Mail, MapPin, Phone, Instagram, Youtube } from 'lucide-vue-next'
     </div>
 
     <div
-      class="max-w-7xl mx-auto mt-16 pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center text-[9px] tracking-[0.2em] uppercase font-black text-slate-500">
+      class="max-w-7xl mx-auto mt-16 pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-start text-[9px] tracking-[0.2em] uppercase font-black text-slate-500">
       <p>&copy; 2026 VintageTone Music Store. Todos los derechos reservados.</p>
-      <div class="flex space-x-6 mt-6 md:mt-0">
-        <a class="hover:text-amber-600 transition-all cursor-pointer hover:scale-110">
-          <Instagram :size="20" />
-        </a>
-        <a class="hover:text-amber-600 transition-all cursor-pointer hover:scale-110">
-          <Youtube :size="20" />
+      <div class="flex gap-4 mt-6 md:mt-0">
+        <a v-for="(social, index) in socials" :key="index" :href="social.link" class="
+      w-8 h-8
+      md:w-12 md:h-12
+      rounded-xl bg-slate-900
+      flex items-center justify-center
+      text-white hover:text-amber-500
+      transition-all active:scale-90 shadow-sm
+    ">
+          <component :is="social.icon" class="w-4 h-4 md:w-6 md:h-6" />
         </a>
       </div>
+
     </div>
   </footer>
 </template>
