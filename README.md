@@ -19,7 +19,7 @@
 
 
 > [!TIP]
-> Puedes ver el sitio en vivo aquí: **[Demo en Vivo](https://vintagetone-front-vue.vercel.app/)** *(Actualiza con tu URL real)*
+> Puedes ver el sitio en vivo aquí: **[Demo en Vivo](https://vintagetone-front-vue.vercel.app)**
 
 ---
 
